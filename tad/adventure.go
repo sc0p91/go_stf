@@ -11,12 +11,14 @@ func clear() {
 }
 
 func scanner() {
+
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
-
-		text := scanner.Text()
-		switch text {
+		clear()
+		
+		action := scanner.Text()
+		switch action {
 		case "q", "Q":
 			fmt.Println("This Program.")
 			break
@@ -45,7 +47,8 @@ func scanner() {
 			fmt.Println("Bye")
 			os.Exit(0)
 		default:
-			fmt.Println(text)
+			fmt.Print("\"", action, "\" not recognized.\n",
+				"Please choose a provided Action\n")
 			break
 		}
 	}
@@ -54,7 +57,6 @@ func scanner() {
 func main() {
 
 	player := newPlayer()
-	player.menu()
-	//scanner()
-
+	player.menu()	
+	scanner()
 }
