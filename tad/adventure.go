@@ -53,7 +53,7 @@ func scanner() {
 
 func main() {
 
-	player := initialize()
+	player := newPlayer()
 	player.menu()
 	//scanner()
 
