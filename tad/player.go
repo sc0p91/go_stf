@@ -28,6 +28,14 @@ type player struct {
 	mhi     string
 }
 
+func (p *player) selectClass(name string, sta uint, str uint, dex uint, int uint) {
+	p.class = name
+	p.sta = sta
+	p.str = str
+	p.dex = dex
+	p.int = int
+}
+
 func newPlayer() *player {
 	p := &player{
 		hp:     100,
@@ -60,33 +68,16 @@ func newPlayer() *player {
 		class = strings.Replace(class, "\n", "", -1)
 		switch class {
 		case "w", "W", "Warrior", "warrior":
-			fmt.Print("MATCH")
-			p.class = "Warrior"
-			p.sta = 7
-			p.str = 7
-			p.dex = 4
-			p.int = 2
+			p.selectClass("Warrior", 7, 7, 4, 2)
 			break
 		case "m", "M", "Mage", "mage":
-			p.class = "Mage"
-			p.sta = 5
-			p.str = 2
-			p.dex = 3
-			p.int = 10
+			p.selectClass("Mage", 5, 2, 3, 10)
 			break
 		case "p", "P", "Paladin", "paladin":
-			p.class = "Paladin"
-			p.sta = 5
-			p.str = 6
-			p.dex = 4
-			p.int = 5
+			p.selectClass("Palading", 5, 6, 4, 5)
 			break
 		case "r", "R", "Ranger", "ranger":
-			p.class = "Ranger"
-			p.sta = 6
-			p.str = 2
-			p.dex = 8
-			p.int = 4
+			p.selectClass("Ranger", 6, 2, 8, 4)
 			break
 		default:
 			fmt.Print("\"", class, "\" not recognized.\n",
