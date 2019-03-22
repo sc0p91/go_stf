@@ -8,6 +8,7 @@ import (
 
 func clear() {
 	fmt.Println("\033[2J")
+	fmt.Println("")
 }
 
 func scanner() {
@@ -17,7 +18,7 @@ func scanner() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
-		clear()
+		
 		player.menu()
 		
 		action := scanner.Text()
@@ -49,9 +50,11 @@ func scanner() {
 		case "x", "X":
 			fmt.Println("Bye")
 			os.Exit(0)
+			break
+		case "":
+			break
 		default:
-			fmt.Print("\"", action, "\" not recognized.\n",
-				"Please choose a provided Action\n")
+			fmt.Print("\"", action, "\" not recognized. Please choose a provided Action\n")
 			break
 		}
 	}
