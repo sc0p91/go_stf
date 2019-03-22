@@ -6,10 +6,6 @@ import (
 	"os"
 )
 
-// VARIABLES
-var pname string
-var pclass string
-
 func clear() {
 	fmt.Println("\033[2J")
 }
@@ -57,8 +53,8 @@ func scanner() {
 
 func main() {
 
-	initialize()
-	menu()
+	player := newPlayer()
+	player.menu()
 	//scanner()
 
 }
