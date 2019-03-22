@@ -3,16 +3,28 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
 
-func initialize() {
+func initialize() *player {
+	p := &player{
+		hp: 100,
+		mp: 100,
+		maxHp: 100,
+		maxMp: 100,
+		maxExp: 100,
+		lvl: 1,
+	}
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
 	reader := bufio.NewReader(os.Stdin)
-	pname, _ = reader.ReadString('\n')
-	pname = strings.Replace(pname, "\n", "", -1)
+	pname, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatal(err)
+	}
+	p.name = strings.Replace(pname, "\n", "", -1)
 
 	// Set Player Class
 	clear()
@@ -23,45 +35,46 @@ func initialize() {
 		"[P] Paladin - Rightful Fighter of the Light\n",
 		"[R] Ranger - Distant Fighter with Bow and Arrow\n")
 
-	for pclass == "" {
-		cclass, _ := reader.ReadString('\n')
-		cclass = strings.Replace(cclass, "\n", "", -1)
-		switch cclass {
+	for p.class == "" {
+		class, _ := reader.ReadString('\n')
+		class = strings.Replace(class, "\n", "", -1)
+		switch class {
 			case "w", "W", "Warrior", "warrior":
 				fmt.Print("MATCH")
-				pclass = "Warrior"
-				psta = 7
-				pstr = 7
-				pdex = 4
-				pint = 2
+				p.class = "Warrior"
+				p.sta = 7
+				p.str = 7
+				p.dex = 4
+				p.int = 2
 				break
 			case "m", "M", "Mage", "mage":
-				pclass = "Mage"
-				psta = 5
-				pstr = 2
-				pdex = 3
-				pint = 10
+				p.class = "Mage"
+				p.sta = 5
+				p.str = 2
+				p.dex = 3
+				p.int = 10
 				break
 			case "p", "P", "Paladin", "paladin":
-				pclass = "Paladin"
-				psta = 5
-				pstr = 6
-				pdex = 4
-				pint = 5
+				p.class = "Paladin"
+				p.sta = 5
+				p.str = 6
+				p.dex = 4
+				p.int = 5
 				break
 			case "r", "R", "Ranger", "ranger":
-				pclass = "Ranger"
-				psta = 6
-				pstr = 2
-				pdex = 8
-				pint = 4
+				p.class = "Ranger"
+				p.sta = 6
+				p.str = 2
+				p.dex = 8
+				p.int = 4
 				break
 			default:
-				fmt.Print("\"", cclass, "\" not recognized.\n",
+				fmt.Print("\"", class, "\" not recognized.\n",
 					"Please choose a provided class\n")
 				break
 		}
 	}
 
-	fmt.Print("A ", pclass, " it is!\n")
+	fmt.Print("A ", p.class, " it is!\n")
+	return p
 }
