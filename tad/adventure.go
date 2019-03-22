@@ -12,10 +12,13 @@ func clear() {
 
 func scanner() {
 
+	player := newPlayer()
+
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
 		clear()
+		player.menu()
 		
 		action := scanner.Text()
 		switch action {
@@ -55,8 +58,6 @@ func scanner() {
 }
 
 func main() {
-
-	player := newPlayer()
-	player.menu()	
+	
 	scanner()
 }
