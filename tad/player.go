@@ -8,43 +8,16 @@ import (
 	"strings"
 )
 
-type player struct {
-	alive	bool
-	name    string
-	class   string
-	hp      int
-	mp      int
-	maxHp   int
-	maxMp   int
-	exp     int
-	maxExp  int
-	lvl     int
-	sta     int
-	str     int
-	int     int
-	dex     int
-	attacks [4]string
-	items   [2]string
-	hhi     string
-	mhi     string
-}
-
-func (p *player) selectClass(name string, sta int, str int, dex int, int int) {
-	p.class = name
-	p.sta = sta
-	p.str = str
-	p.dex = dex
-	p.int = int
-}
-
-func newPlayer() *player {
-	p := &player{
+func newPlayer() *entity {
+	p := &entity{
 		hp:     100,
 		mp:     100,
 		maxHp:  100,
 		maxMp:  100,
 		maxExp: 100,
 		lvl:    1,
+		player: true,
+		alive: true,
 	}
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
@@ -88,13 +61,10 @@ func newPlayer() *player {
 	}
 	fmt.Print("A ", p.class, " it is!\n")
 
-	// Player gets born
-	p.alive = true
-
 	return p
 }
 
-func (p *player) menu() {
+func (p *entity) menu() {
 	fmt.Print(
 		"‗========== PLAYER ==========‗\n",
 		"  Name\t", p.name, "\n",
