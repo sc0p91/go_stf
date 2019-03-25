@@ -12,24 +12,24 @@ type player struct {
 	alive	bool
 	name    string
 	class   string
-	hp      uint
-	mp      uint
-	maxHp   uint
-	maxMp   uint
-	exp     uint
-	maxExp  uint
-	lvl     uint
-	sta     uint
-	str     uint
-	int     uint
-	dex     uint
+	hp      int
+	mp      int
+	maxHp   int
+	maxMp   int
+	exp     int
+	maxExp  int
+	lvl     int
+	sta     int
+	str     int
+	int     int
+	dex     int
 	attacks [4]string
 	items   [2]string
 	hhi     string
 	mhi     string
 }
 
-func (p *player) selectClass(name string, sta uint, str uint, dex uint, int uint) {
+func (p *player) selectClass(name string, sta int, str int, dex int, int int) {
 	p.class = name
 	p.sta = sta
 	p.str = str
@@ -95,9 +95,8 @@ func newPlayer() *player {
 }
 
 func (p *player) menu() {
-	clear()
 	fmt.Print(
-		"‗========== PLAYER ===========‗\n",
+		"‗========== PLAYER ==========‗\n",
 		"  Name\t", p.name, "\n",
 		"  Class\t", p.class, "\n",
 		"  Level\t", p.lvl, "\n",
@@ -109,7 +108,7 @@ func (p *player) menu() {
 		"  DEX ", p.dex, "\t\tINT\t", p.int, "\n",
 		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
 		"\n",
-		"‗========= ACTIONS ==========‗\n",
+		"‗========== ACTION ==========‗\n",
 		"  [Q] Placeholder Atk1 \n",
 		"  [W] Placeholder Atk2 \n",
 		"  [E] Placeholder Atk3 \n",

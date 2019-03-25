@@ -14,11 +14,13 @@ func clear() {
 func scanner() {
 
 	player := newPlayer()
+	enemy := newEnemy(player.lvl)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() && player.alive {
 		
+		enemy.screen()
 		player.menu()
 		
 		action := scanner.Text()
