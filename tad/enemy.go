@@ -6,30 +6,7 @@ import (
 	"time"
 )
 
-type enemy struct {
-	alive	bool
-	name    string
-	class   string
-	hp      int
-	maxHp   int
-	mp      int
-	maxMp   int
-	exp     int
-	lvl     int
-	sta     int
-	str     int
-	int     int
-	dex     int
-	attacks [4]string
-	items   [2]string
-}
-
-func (e *enemy) selectClass(ename string, cname string) {
-	e.name = ename
-	e.class = cname
-}
-
-func newEnemy(scale int) *enemy {
+func newEnemy(scale int) *entity {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
@@ -71,32 +48,28 @@ func newEnemy(scale int) *enemy {
 
 	switch class {
 	case 0:
-		e.selectClass("Soldier", "Humanoid")
-		break
+		e.name = "Soldier"
+		e.class = "Humanoid"
 	case 1:
-		e.selectClass("Ghoul", "Humanoid")
-		break
+		e.name = "Ghoul"
+		e.class = "Humanoid"
 	case 2:
-		e.selectClass("Zombie", "Humanoid")
-		break
+		e.name = "Zombie"
+		e.class = "Humanoid"
 	case 3:
-		e.selectClass("Bat", "Animal")
-		break
+		e.name = "Bat"
+		e.class = "Animal"
 	case 4:
-		e.selectClass("Wolf", "Animal")
-		break
+		e.name = "Wolf"
+		e.class = "Animal"
 	default:
 		fmt.Print("\"", class, "\" broken random number lol")
-		break
 	}
-
-	// Enemy gets born
-	e.alive = true
 
 	return e
 }
 
-func (e *enemy) screen() {
+func (e *entity) screen() {
 	clear()
 
 	fmt.Print(
