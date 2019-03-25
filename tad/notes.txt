@@ -1,0 +1,5 @@
+# ToDos I don't know how to do.
+
+-> Set up an enemy like a player
+-> Set Stats & Atks based on player level
+

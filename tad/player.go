@@ -9,6 +9,7 @@ import (
 )
 
 type player struct {
+	alive	bool
 	name    string
 	class   string
 	hp      uint
@@ -85,8 +86,11 @@ func newPlayer() *player {
 			break
 		}
 	}
-
 	fmt.Print("A ", p.class, " it is!\n")
+
+	// Player gets born
+	p.alive = true
+
 	return p
 }
 

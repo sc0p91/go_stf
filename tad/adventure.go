@@ -17,7 +17,7 @@ func scanner() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	for scanner.Scan() {
+	for scanner.Scan() && player.alive {
 		
 		player.menu()
 		
