@@ -1,8 +1,10 @@
 package main
 
+import "fmt"
+
 type entity struct {
-	alive	bool
-	player	bool
+	alive   bool
+	player  bool
 	name    string
 	class   string
 	hp      int
@@ -20,10 +22,24 @@ type entity struct {
 	items   [2]string
 }
 
-func (p *entity) selectClass(name string, sta int, str int, dex int, int int) {
-	p.class = name
-	p.sta = sta
-	p.str = str
-	p.dex = dex
-	p.int = int
+func (e *entity) selectClass(name string, sta int, str int, dex int, int int) {
+	e.class = name
+	e.sta = sta
+	e.str = str
+	e.dex = dex
+	e.int = int
+}
+
+func (e entity) showStats() {
+	fmt.Print(
+		"  Name\t", e.name, "\n",
+		"  Class\t", e.class, "\n",
+		"  Level\t", e.lvl, "\n",
+		"  EXP\t+", e.exp, " \n",
+		"  \n",
+		"  Hitpoints\t", e.hp, " / ", e.maxHp, "\n",
+		"  Manapoints\t", e.mp, " / ", e.maxMp, "\n",
+		"  STA ", e.sta, "\t\tSTR\t", e.str, "\n",
+		"  DEX ", e.dex, "\t\tINT\t", e.int, "\n",
+		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
 }

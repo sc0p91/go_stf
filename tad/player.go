@@ -17,7 +17,7 @@ func newPlayer() *entity {
 		maxExp: 100,
 		lvl:    1,
 		player: true,
-		alive: true,
+		alive:  true,
 	}
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
@@ -66,18 +66,6 @@ func newPlayer() *entity {
 
 func (p *entity) menu() {
 	fmt.Print(
-		"‗========== PLAYER ==========‗\n",
-		"  Name\t", p.name, "\n",
-		"  Class\t", p.class, "\n",
-		"  Level\t", p.lvl, "\n",
-		"  EXP\t", p.exp, " / ", p.maxExp, " \n",
-		"  \n",
-		"  Hitpoints\t", p.hp, " / ", p.maxHp, "\n",
-		"  Manapoints\t", p.mp, " / ", p.maxMp, "\n",
-		"  STA ", p.sta, "\t\tSTR\t", p.str, "\n",
-		"  DEX ", p.dex, "\t\tINT\t", p.int, "\n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
-		"\n",
 		"‗========== ACTION ==========‗\n",
 		"  [Q] Placeholder Atk1 \n",
 		"  [W] Placeholder Atk2 \n",

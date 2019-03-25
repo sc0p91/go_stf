@@ -68,20 +68,3 @@ func newEnemy(scale int) *entity {
 
 	return e
 }
-
-func (e *entity) screen() {
-	clear()
-
-	fmt.Print(
-		"‗======== CHALLENGER ========‗\n",
-		"  Name\t", e.name, "\n",
-		"  Class\t", e.class, "\n",
-		"  Level\t", e.lvl, "\n",
-		"  EXP\t+", e.exp, " \n",
-		"  \n",
-		"  Hitpoints\t", e.hp, " / ", e.maxHp, "\n",
-		"  Manapoints\t", e.mp, " / ", e.maxMp, "\n",
-		"  STA ", e.sta, "\t\tSTR\t", e.str, "\n",
-		"  DEX ", e.dex, "\t\tINT\t", e.int, "\n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
-}

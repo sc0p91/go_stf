@@ -19,10 +19,15 @@ func scanner() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() && player.alive {
-		
-		enemy.screen()
+		clear()
+		fmt.Println("‗======== CHALLENGER ========‗")
+		enemy.showStats()
+
+		fmt.Println("‗========== PLAYER ==========‗")
+		player.showStats()
+
 		player.menu()
-		
+
 		action := scanner.Text()
 		switch action {
 		case "q", "Q":
@@ -63,6 +68,6 @@ func scanner() {
 }
 
 func main() {
-	
+
 	scanner()
 }
