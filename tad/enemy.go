@@ -35,33 +35,36 @@ func newEnemy(scale int) *enemy {
 	rand.Seed(time.Now().UnixNano())
 
 	// Create random Stats
-	var ranA = 0
-	var ranB = 0
-	var ranC = 0
-	var ranD = 0
-	for (ranD <= 1) {
-		ranA = rand.Intn(8) + 1
-		ranB = rand.Intn(8) + 1
-		ranC = rand.Intn(8) + 1
-		ranD = (20 + scale) - ranA - ranB -ranC
+	rands := map[string]int{
+		"sta": 0,
+		"int": 0,
+		"dex": 0,
+		"str": 0,
+	}
+	for rands["sta"] <= 1 {
+		rands["int"] = rand.Intn(8) + 1
+		rands["dex"] = rand.Intn(8) + 1
+		rands["str"] = rand.Intn(8) + 1
+		rands["sta"] = (20 + scale) - rands["int"] - rands["dex"] - rands["srt"]
 	}
 
 	// Create random HP + MaxHP
-	fhp := ((rand.Intn(10) + (8 * scale)) * 10 )
+	fhp := ((rand.Intn(10) + (8 * scale)) * 10)
 
-	e := &enemy{
+	e := &entity{
 		maxHp:  fhp,
 		hp:     fhp,
 		mp:     100,
 		maxMp:  100,
+		player: false,
+		sta:    rands["sta"],
+		str:    rands["str"],
+		dex:    rands["dex"],
+		int:    rands["int"],
+		lvl:    scale,
+		exp:    25 * scale,
+		alive:  true,
 	}
-
-	e.sta = ranD
-	e.str = ranC
-	e.dex = ranB
-	e.int = ranA
-	e.lvl = scale
-	e.exp = 25 * scale
 
 	// Set Enemy
 	class := rand.Intn(5)
