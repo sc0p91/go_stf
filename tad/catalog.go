@@ -37,6 +37,24 @@ var entityTemplates = map[string]entity{
 			"int": 4,
 		},
 	},
+	"humanoid": entity{
+		class: classTemplates["humanoid"],
+		stats: map[string]int{
+			"sta": 5,
+			"str": 5,
+			"dex": 5,
+			"int": 5,
+		},
+	},
+	"animal": entity{
+		class: classTemplates["animal"],
+		stats: map[string]int{
+			"sta": 6,
+			"str": 4,
+			"dex": 6,
+			"int": 4,
+		},
+	},
 }
 
 var classTemplates = map[string]class{
@@ -189,7 +207,7 @@ var attackTemplates = map[string]attack{
 		lvlreq:   1,
 		classreq: classTemplates["humanoid"],
 		cost:     1,
-		slot:     1,
+		slot:     0,
 	},
 	// ANIMALS
 	"Bite": attack{
@@ -198,6 +216,6 @@ var attackTemplates = map[string]attack{
 		lvlreq:   1,
 		classreq: classTemplates["animal"],
 		cost:     1,
-		slot:     1,
+		slot:     0,
 	},
 }
