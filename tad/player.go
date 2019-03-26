@@ -18,7 +18,9 @@ func newPlayer() *entity {
 		lvl:    1,
 		player: true,
 		alive:  true,
+		attacks: make(map[string]int),
 	}
+	
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
 	reader := bufio.NewReader(os.Stdin)
@@ -29,29 +31,28 @@ func newPlayer() *entity {
 	p.name = strings.Replace(pname, "\n", "", -1)
 
 	// Set Player Class
-	clear()
-	fmt.Print("Welcome ", pname, "\n",
+	fmt.Print("\nGreetings ", pname, "\n",
 		"What Class would you like to be?\n",
 		"[W] Warrior - Mighty & Strong Sword Fighter\n",
 		"[M] Mage - Powerfull Glasscanon Spellcaster\n",
-		"[P] Paladin - Rightful Fighter of the Light\n",
+		"[P] Paladin - Rightful Fighter rof the Light\n",
 		"[R] Ranger - Distant Fighter with Bow and Arrow\n")
 
-	for p.class == "" {
+	for p.class.name == "" {
 		class, _ := reader.ReadString('\n')
 		class = strings.Replace(class, "\n", "", -1)
 		switch class {
 		case "w", "W", "Warrior", "warrior":
-			p.selectClass("Warrior", 7, 7, 4, 2)
+			p.selectClass("Warrior", 7, 7, 4, 2, "str")
 			break
 		case "m", "M", "Mage", "mage":
-			p.selectClass("Mage", 5, 2, 3, 10)
+			p.selectClass("Mage", 5, 2, 3, 10, "int")
 			break
 		case "p", "P", "Paladin", "paladin":
-			p.selectClass("Palading", 5, 6, 4, 5)
+			p.selectClass("Palading", 5, 6, 4, 5, "int")
 			break
 		case "r", "R", "Ranger", "ranger":
-			p.selectClass("Ranger", 6, 2, 8, 4)
+			p.selectClass("Ranger", 6, 2, 8, 4, "dex")
 			break
 		default:
 			fmt.Print("\"", class, "\" not recognized.\n",
@@ -59,22 +60,10 @@ func newPlayer() *entity {
 			break
 		}
 	}
-	fmt.Print("A ", p.class, " it is!\n")
+	fmt.Print("A ", p.class.name, " it is!\n",
+			  "[Hit enter to begin your journey]")
+
+	p.attacks["Unarmed Strike"] = p.str + 25		  
 
 	return p
-}
-
-func (p *entity) menu() {
-	fmt.Print(
-		"‗========== ACTION ==========‗\n",
-		"  [Q] Placeholder Atk1 \n",
-		"  [W] Placeholder Atk2 \n",
-		"  [E] Placeholder Atk3 \n",
-		"  [R] Placeholder Atk4 \n",
-		"  [A] Placeholder Item1\n",
-		"  [S] Placeholder Item2\n",
-		"  [D] Restore HP|MP    \n",
-		"  [F] Do nothing.      \n",
-		"  [X] quit             \n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n")
 }

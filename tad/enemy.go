@@ -49,19 +49,19 @@ func newEnemy(scale int) *entity {
 	switch class {
 	case 0:
 		e.name = "Soldier"
-		e.class = "Humanoid"
+		e.class.name = "Humanoid"
 	case 1:
 		e.name = "Ghoul"
-		e.class = "Humanoid"
+		e.class.name = "Humanoid"
 	case 2:
 		e.name = "Zombie"
-		e.class = "Humanoid"
+		e.class.name = "Humanoid"
 	case 3:
 		e.name = "Bat"
-		e.class = "Animal"
+		e.class.name = "Animal"
 	case 4:
 		e.name = "Wolf"
-		e.class = "Animal"
+		e.class.name = "Animal"
 	default:
 		fmt.Print("\"", class, "\" broken random number lol")
 	}
