@@ -9,16 +9,7 @@ import (
 )
 
 func newPlayer() *entity {
-	p := &entity{
-		hp:     100,
-		mp:     100,
-		maxHp:  100,
-		maxMp:  100,
-		maxExp: 100,
-		lvl:    1,
-		player: true,
-		alive:  true,
-	}
+	p := entity{}
 
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
@@ -27,7 +18,7 @@ func newPlayer() *entity {
 	if err != nil {
 		log.Fatal(err)
 	}
-	p.name = strings.Replace(pname, "\n", "", -1)
+	
 
 	// Set Player Class
 	fmt.Print("\nGreetings ", pname, "\n",
@@ -42,27 +33,33 @@ func newPlayer() *entity {
 		class = strings.Replace(class, "\n", "", -1)
 		switch class {
 		case "w", "W", "Warrior", "warrior":
-			p.selectClass("Warrior", 7, 7, 4, 2, "str")
-			break
+			p = entityTemplates["warrior"]
 		case "m", "M", "Mage", "mage":
-			p.selectClass("Mage", 5, 2, 3, 10, "int")
-			break
+			p = entityTemplates["mage"]
 		case "p", "P", "Paladin", "paladin":
-			p.selectClass("Palading", 5, 6, 4, 5, "int")
-			break
+			p = entityTemplates["paladin"]
 		case "r", "R", "Ranger", "ranger":
-			p.selectClass("Ranger", 6, 2, 8, 4, "dex")
-			break
+			p = entityTemplates["ranger"]
 		default:
 			fmt.Print("\"", class, "\" not recognized.\n",
 				"Please choose a provided class\n")
 			break
 		}
 	}
+	p.name = strings.Replace(pname, "\n", "", -1)
+	p.hp = 100
+	p.mp = 100
+	p.maxHp = 100
+	p.maxMp = 100
+	p.maxExp = 100
+	p.lvl = 1
+	p.player = true
+	p.alive = true
+
 	fmt.Print("A ", p.class.name, " it is!\n",
 		"[Hit enter to begin your journey]")
 
-	p.attacks[0] = attack{"Unarmed Strike", p.str + 25, 10}
+	p.attacks[0] = attackTemplates["Unarmed Strike"]
 
-	return p
+	return &p
 }

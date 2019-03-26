@@ -30,9 +30,9 @@ func gameLoop() {
 		case "w", "W":
 			player.battle(1, enemy)
 		case "e", "E":
-			fmt.Println("This Program.")
+			player.battle(2, enemy)
 		case "r", "R":
-			fmt.Println("This Program.")
+			player.battle(3, enemy)
 		case "a", "A":
 			fmt.Println("This Program.")
 		case "s", "S":
@@ -49,7 +49,7 @@ func gameLoop() {
 			fmt.Print("\"", action, "\" not recognized. Please choose a provided Action\n")
 		}
 
-		if !enemy.alive {
+		if !enemy.alive && player.alive {
 			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
 			player.gainExp(enemy.exp)
 
@@ -69,10 +69,10 @@ func gameLoop() {
 func (p entity) menu() {
 	fmt.Print(
 		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.attacks[0].name, " \n",
-		" [W] ", p.attacks[1].name, " \n",
-		" [E] ", p.attacks[2].name, " \n",
-		" [R] ", p.attacks[3].name, " \n",
+		" [Q] ", p.attacks[0].name, "(", p.attacks[0].cost, ") \n",
+		" [W] ", p.attacks[1].name, "(", p.attacks[1].cost, ") \n",
+		" [E] ", p.attacks[2].name, "(", p.attacks[2].cost, ") \n",
+		" [R] ", p.attacks[3].name, "(", p.attacks[3].cost, ") \n",
 		" [A] Placeholder Item1\n",
 		" [S] Placeholder Item2\n",
 		" [D] Restore HP|MP    \n",

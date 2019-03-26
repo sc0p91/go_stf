@@ -14,10 +14,7 @@ type entity struct {
 	exp     int
 	maxExp  int
 	lvl     int
-	sta     int
-	str     int
-	int     int
-	dex     int
+	stats map[string]int
 	attacks [4]attack
 	items   [2]string
 }
@@ -31,15 +28,9 @@ type attack struct {
 	name   string
 	damage int
 	cost   int
-}
-
-func (e *entity) selectClass(name string, sta int, str int, dex int, int int, primary string) {
-	e.class.name = name
-	e.primary = primary
-	e.sta = sta
-	e.str = str
-	e.dex = dex
-	e.int = int
+	lvlreq int
+	classreq class
+	slot int
 }
 
 func (e *entity) gainExp(exp int) {
@@ -53,30 +44,28 @@ func (e *entity) levelUp() {
 	e.lvl++
 	e.exp = e.exp - e.maxExp
 	e.maxExp = e.maxExp * 2
-	e.sta += 2
-	e.hp += e.sta * 10
-	e.maxHp += e.sta * 10
-	e.mp += e.int * 10
-	e.maxMp += e.int * 10
+	e.stats["sta"] += 2
+	e.maxHp += e.stats["sta"] * 10
+	e.hp = e.maxHp
+	e.maxMp += e.stats["int"] * 10
+	e.mp = e.maxMp
 
-	e.attacks[0].damage = e.str + 25
+	e.attacks[0].damage = e.stats["str"] + 25
 
-	switch e.primary {
-	case "str":
-		e.int++
-		e.dex++
-		e.str += 2
-		e.attacks[1] = attack{"Obliterate", e.str + 25, 7}
-	case "int":
-		e.int += 2
-		e.dex++
-		e.str++
-		e.attacks[1] = attack{"Lightning Bolt", e.int + 25, 7}
-	case "dex":
-		e.int++
-		e.dex += 2
-		e.str++
-		e.attacks[1] = attack{"Cobra Shot", e.dex + 25, 7}
+	for s := range e.stats {
+		if s != e.primary {
+			e.stats[s]++
+		} else {
+			e.stats[s] += 2
+		}
+	}
+
+	for _, a := range attackTemplates {
+		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
+			e.attacks[a.slot] = a
+			e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
+			e.attacks[a.slot].cost = a.cost + 2 * e.lvl
+		}
 	}
 
 	fmt.Println("You gained a level")
@@ -96,17 +85,32 @@ func (e entity) showStats() {
 		" \n",
 		" Hitpoints\t", e.hp, " / ", e.maxHp, "\n",
 		" Manapoints\t", e.mp, " / ", e.maxMp, "\n",
-		" STA ", e.sta, "\t\tSTR\t", e.str, "\n",
-		" DEX ", e.dex, "\t\tINT\t", e.int, "\n",
+		" STA ", e.stats["sta"], "\t\tSTR\t", e.stats["str"], "\n",
+		" DEX ", e.stats["dex"], "\t\tINT\t", e.stats["int"], "\n",
 		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
 }
 
 func (e *entity) battle(attack int, other *entity) {
 	fmt.Println("You hit the", other.name, "for", e.attacks[attack].damage, "dmg")
-	if other.hp > 0 && e.attacks[attack].damage < other.hp {
-		other.hp -= e.attacks[attack].damage
+	if e.mp >= e.attacks[attack].cost{
+		if other.hp > 0 && e.attacks[attack].damage < other.hp {
+			other.hp -= e.attacks[attack].damage
+		} else {
+			other.hp = 0
+			other.alive = false
+		}
+		e.mp -= e.attacks[attack].cost
 	} else {
-		other.hp = 0
-		other.alive = false
+		fmt.Println("OOM")
+	}
+	if other.alive {
+		fmt.Println(other.name, "hits you for", other.attacks[0].damage)
+		if other.attacks[0].damage >= e.hp {
+			e.hp = 0
+			e.alive = false
+			fmt.Println("you dead lol")
+		} else {
+			e.hp -= other.attacks[0].damage
+		}
 	}
 }

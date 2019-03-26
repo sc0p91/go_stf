@@ -34,10 +34,12 @@ func newEnemy(scale int) *entity {
 		mp:     100,
 		maxMp:  100,
 		player: false,
-		sta:    rands["sta"],
-		str:    rands["str"],
-		dex:    rands["dex"],
-		int:    rands["int"],
+		stats: map[string]int {
+			"sta":    rands["sta"],
+			"str":    rands["str"],
+			"dex":    rands["dex"],
+			"int":    rands["int"],
+		},
 		lvl:    scale,
 		exp:    25 * scale,
 		alive:  true,
@@ -49,22 +51,25 @@ func newEnemy(scale int) *entity {
 	switch class {
 	case 0:
 		e.name = "Soldier"
-		e.class.name = "Humanoid"
+		e.class = classTemplates["humanoid"]
 	case 1:
 		e.name = "Ghoul"
-		e.class.name = "Humanoid"
+		e.class = classTemplates["humanoid"]
 	case 2:
 		e.name = "Zombie"
-		e.class.name = "Humanoid"
+		e.class = classTemplates["humanoid"]
 	case 3:
 		e.name = "Bat"
-		e.class.name = "Animal"
+		e.class = classTemplates["animal"]
 	case 4:
 		e.name = "Wolf"
-		e.class.name = "Animal"
+		e.class = classTemplates["animal"]
 	default:
 		fmt.Print("\"", class, "\" broken random number lol")
 	}
+
+	e.attacks[0] = attackTemplates["Unarmed Strike"]
+	e.attacks[0].damage = (e.attacks[0].damage + e.stats[e.primary]-e.lvl)/4
 
 	return e
 }
