@@ -19,16 +19,16 @@ func gameLoop() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() && player.alive {
-		
+
 		// Clear the screen for every iteration
 		clear()
 
 		action := scanner.Text()
 		switch action {
 		case "q", "Q":
-			player.battle("Unarmed Strike", enemy)
+			player.battle(0, enemy)
 		case "w", "W":
-			fmt.Println("This Program.")
+			player.battle(1, enemy)
 		case "e", "E":
 			fmt.Println("This Program.")
 		case "r", "R":
@@ -53,33 +53,33 @@ func gameLoop() {
 			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
 			player.gainExp(enemy.exp)
 
-			enemy = newEnemy(player.lvl)		
+			enemy = newEnemy(player.lvl)
 		}
 		// Show E & P Stats + Actions
 		fmt.Println("\n‗========= OPPONENT =========‗")
 		enemy.showStats()
 
-
 		fmt.Println("‗========== PLAYER ==========‗")
 		player.showStats()
 
-		menu(player.attacks)
+		player.menu()
 	}
 }
 
-func menu(atk map[string]int) {
+func (p entity) menu() {
 	fmt.Print(
 		"‗========== ACTION ==========‗\n",
-		" [Q] Unarmed Strike \n",
-		" [W] ", atk, "\n",
-		" [E] Placeholder Atk3 \n",
-		" [R] Placeholder Atk4 \n",
+		" [Q] ", p.attacks[0].name, " \n",
+		" [W] ", p.attacks[1].name, " \n",
+		" [E] ", p.attacks[2].name, " \n",
+		" [R] ", p.attacks[3].name, " \n",
 		" [A] Placeholder Item1\n",
 		" [S] Placeholder Item2\n",
 		" [D] Restore HP|MP    \n",
 		" [F] Do nothing.      \n",
 		" [X] quit             \n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n")
+		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
+	)
 }
 
 func main() {

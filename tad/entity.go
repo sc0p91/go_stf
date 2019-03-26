@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 type entity struct {
-	alive   bool
-	player  bool
-	name    string
+	alive  bool
+	player bool
+	name   string
 	class
 	hp      int
 	mp      int
@@ -18,13 +18,19 @@ type entity struct {
 	str     int
 	int     int
 	dex     int
-	attacks map[string]int
+	attacks [4]attack
 	items   [2]string
 }
 
 type class struct {
-	name string
+	name    string
 	primary string
+}
+
+type attack struct {
+	name   string
+	damage int
+	cost   int
 }
 
 func (e *entity) selectClass(name string, sta int, str int, dex int, int int, primary string) {
@@ -45,7 +51,7 @@ func (e *entity) gainExp(exp int) {
 
 func (e *entity) levelUp() {
 	e.lvl++
-	e.exp = e.exp-e.maxExp
+	e.exp = e.exp - e.maxExp
 	e.maxExp = e.maxExp * 2
 	e.sta += 2
 	e.hp += e.sta * 10
@@ -53,24 +59,24 @@ func (e *entity) levelUp() {
 	e.mp += e.int * 10
 	e.maxMp += e.int * 10
 
-	e.attacks["Unarmed Strike"] = e.str + 25
+	e.attacks[0].damage = e.str + 25
 
 	switch e.primary {
-		case "str":
-			e.int++
-			e.dex++
-			e.str += 2
-			e.attacks["Obliterate"] = e.str + 25
-		case "int":
-			e.int+= 2
-			e.dex++
-			e.str++
-			e.attacks["Lightning Bolt"] = e.int + 25
-		case "dex":
-			e.int++
-			e.dex+= 2
-			e.str++
-			e.attacks["Cobra Shot"] = e.dex + 25
+	case "str":
+		e.int++
+		e.dex++
+		e.str += 2
+		e.attacks[1] = attack{"Obliterate", e.str + 25, 7}
+	case "int":
+		e.int += 2
+		e.dex++
+		e.str++
+		e.attacks[1] = attack{"Lightning Bolt", e.int + 25, 7}
+	case "dex":
+		e.int++
+		e.dex += 2
+		e.str++
+		e.attacks[1] = attack{"Cobra Shot", e.dex + 25, 7}
 	}
 
 	fmt.Println("You gained a level")
@@ -82,7 +88,7 @@ func (e entity) showStats() {
 		" Class\t", e.class.name, "\n",
 		" Level\t", e.lvl, "\n")
 	if e.player {
-		fmt.Print(" EXP\t", e.exp," / ", e.maxExp, "\n")
+		fmt.Print(" EXP\t", e.exp, " / ", e.maxExp, "\n")
 	} else {
 		fmt.Print(" EXP\t", e.exp, "\n")
 	}
@@ -95,10 +101,10 @@ func (e entity) showStats() {
 		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
 }
 
-func (e *entity) battle(attack string, other *entity) {	
-	fmt.Println("You hit the", other.name, "for", e.attacks[attack], "dmg")
-	if ( other.hp > 0 && e.attacks[attack] < other.hp ) {
-		other.hp -= e.attacks[attack]
+func (e *entity) battle(attack int, other *entity) {
+	fmt.Println("You hit the", other.name, "for", e.attacks[attack].damage, "dmg")
+	if other.hp > 0 && e.attacks[attack].damage < other.hp {
+		other.hp -= e.attacks[attack].damage
 	} else {
 		other.hp = 0
 		other.alive = false
