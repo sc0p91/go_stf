@@ -18,7 +18,6 @@ func newPlayer() *entity {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 
 	// Set Player Class
 	fmt.Print("\nGreetings ", pname, "\n",

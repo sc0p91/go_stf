@@ -34,15 +34,15 @@ func newEnemy(scale int) *entity {
 		mp:     100,
 		maxMp:  100,
 		player: false,
-		stats: map[string]int {
-			"sta":    rands["sta"],
-			"str":    rands["str"],
-			"dex":    rands["dex"],
-			"int":    rands["int"],
+		stats: map[string]int{
+			"sta": rands["sta"],
+			"str": rands["str"],
+			"dex": rands["dex"],
+			"int": rands["int"],
 		},
-		lvl:    scale,
-		exp:    25 * scale,
-		alive:  true,
+		lvl:   scale,
+		exp:   250 * scale,
+		alive: true,
 	}
 
 	// Set Enemy
@@ -68,8 +68,15 @@ func newEnemy(scale int) *entity {
 		fmt.Print("\"", class, "\" broken random number lol")
 	}
 
-	e.attacks[0] = attackTemplates["Unarmed Strike"]
-	e.attacks[0].damage = (e.attacks[0].damage + e.stats[e.primary]-e.lvl)/4
+	//for _, a := range attackTemplates {
+	//	if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
+	//		e.attacks[a.slot] = a
+	//		e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
+	//		e.attacks[a.slot].cost = a.cost + 2*e.lvl
+	//	}
+	//}
+	e.attacks[0].damage = rand.Intn(5) + e.stats[e.primary]
+	e.attacks[0].name = "bites"
 
 	return e
 }

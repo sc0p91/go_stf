@@ -14,7 +14,7 @@ type entity struct {
 	exp     int
 	maxExp  int
 	lvl     int
-	stats map[string]int
+	stats   map[string]int
 	attacks [4]attack
 	items   [2]string
 }
@@ -25,12 +25,12 @@ type class struct {
 }
 
 type attack struct {
-	name   string
-	damage int
-	cost   int
-	lvlreq int
+	name     string
+	damage   int
+	cost     int
+	lvlreq   int
 	classreq class
-	slot int
+	slot     int
 }
 
 func (e *entity) gainExp(exp int) {
@@ -64,7 +64,7 @@ func (e *entity) levelUp() {
 		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
 			e.attacks[a.slot] = a
 			e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
-			e.attacks[a.slot].cost = a.cost + 2 * e.lvl
+			e.attacks[a.slot].cost = a.cost + 2*e.lvl
 		}
 	}
 
@@ -91,9 +91,9 @@ func (e entity) showStats() {
 }
 
 func (e *entity) battle(attack int, other *entity) {
-	fmt.Println("You hit the", other.name, "for", e.attacks[attack].damage, "dmg")
-	if e.mp >= e.attacks[attack].cost{
+	if e.mp >= e.attacks[attack].cost {
 		if other.hp > 0 && e.attacks[attack].damage < other.hp {
+			fmt.Println("You hit the", other.name, "for", e.attacks[attack].damage, "dmg")
 			other.hp -= e.attacks[attack].damage
 		} else {
 			other.hp = 0
@@ -101,10 +101,10 @@ func (e *entity) battle(attack int, other *entity) {
 		}
 		e.mp -= e.attacks[attack].cost
 	} else {
-		fmt.Println("OOM")
+		fmt.Println("You don't have enough mana")
 	}
 	if other.alive {
-		fmt.Println(other.name, "hits you for", other.attacks[0].damage)
+		fmt.Println(other.name, other.attacks[0].name, "you for ", other.attacks[0].damage, "dmg")
 		if other.attacks[0].damage >= e.hp {
 			e.hp = 0
 			e.alive = false

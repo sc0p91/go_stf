@@ -67,12 +67,19 @@ func gameLoop() {
 }
 
 func (p entity) menu() {
+
+	for i := 0; i < 4; i++ {
+		if p.attacks[i].name == "" {
+			p.attacks[i].name = "Not unlocked"
+		}
+	}
+
 	fmt.Print(
 		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.attacks[0].name, "(", p.attacks[0].cost, ") \n",
-		" [W] ", p.attacks[1].name, "(", p.attacks[1].cost, ") \n",
-		" [E] ", p.attacks[2].name, "(", p.attacks[2].cost, ") \n",
-		" [R] ", p.attacks[3].name, "(", p.attacks[3].cost, ") \n",
+		" [Q] ", p.attacks[0].name, " (MP: ", p.attacks[0].cost, ") \n",
+		" [W] ", p.attacks[1].name, " (MP: ", p.attacks[1].cost, ") \n",
+		" [E] ", p.attacks[2].name, " (MP: ", p.attacks[2].cost, ") \n",
+		" [R] ", p.attacks[3].name, " (MP: ", p.attacks[3].cost, ") \n",
 		" [A] Placeholder Item1\n",
 		" [S] Placeholder Item2\n",
 		" [D] Restore HP|MP    \n",
