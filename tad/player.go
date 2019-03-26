@@ -18,9 +18,8 @@ func newPlayer() *entity {
 		lvl:    1,
 		player: true,
 		alive:  true,
-		attacks: make(map[string]int),
 	}
-	
+
 	// Set Player Name
 	fmt.Println("Welcome Adventurer!\nWhat's your name?")
 	reader := bufio.NewReader(os.Stdin)
@@ -61,9 +60,9 @@ func newPlayer() *entity {
 		}
 	}
 	fmt.Print("A ", p.class.name, " it is!\n",
-			  "[Hit enter to begin your journey]")
+		"[Hit enter to begin your journey]")
 
-	p.attacks["Unarmed Strike"] = p.str + 25		  
+	p.attacks[0] = attack{"Unarmed Strike", p.str + 25, 10}
 
 	return p
 }
