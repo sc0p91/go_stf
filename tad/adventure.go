@@ -7,7 +7,7 @@ import (
 )
 
 func clear() {
-	fmt.Println("\033[2J")
+	//fmt.Println("\033[2J")
 	fmt.Println("")
 }
 
