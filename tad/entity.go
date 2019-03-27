@@ -71,7 +71,7 @@ func (e *entity) levelUp() {
 		}
 	}
 
-	fmt.Println("You gained a level")
+	fmt.Println("_.-* You gained a level *-._")
 }
 
 func (e entity) showStats() {
@@ -110,7 +110,7 @@ func (e *entity) battle(attack int, other *entity) {
 		if other.attacks[0].damage >= e.hp {
 			e.hp = 0
 			e.alive = false
-			fmt.Println("You died a horrible death...")
+			fmt.Println("\nYou died a horrible death...")
 		} else {
 			if rand.Intn(10) > 8 {
 				if other.mp >= other.attacks[1].cost {

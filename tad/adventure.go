@@ -4,11 +4,35 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
+	"runtime"
 )
 
+var clr map[string]func()
+
+func init() {
+	clr = make(map[string]func())
+	clr["linux"] = func() {
+		// Linux Clear
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+	clr["windows"] = func() {
+		// Windows Clear
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+}
+
 func clear() {
-	fmt.Println("\033[2J")
-	fmt.Println("")
+	value, ok := clr[runtime.GOOS]
+	if ok {
+		value()
+	} else {
+		panic("Your platform is unsupported! I can't clear terminal screen :(")
+	}
 }
 
 func gameLoop() {
@@ -50,7 +74,7 @@ func gameLoop() {
 		}
 
 		if !enemy.alive && player.alive {
-			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
+			fmt.Printf("\nYou killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
 			player.gainExp(enemy.exp)
 
 			enemy = newEnemy(player.lvl)
