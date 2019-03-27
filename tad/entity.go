@@ -39,7 +39,10 @@ type attack struct {
 func (e *entity) gainExp(exp int) {
 	e.exp += exp
 	if e.exp >= e.maxExp {
+		fmt.Println("You leveled up!")
 		e.levelUp()
+	} else {
+		fmt.Println(" ")
 	}
 }
 
@@ -71,7 +74,6 @@ func (e *entity) levelUp() {
 		}
 	}
 
-	fmt.Println("_.-* You gained a level *-._")
 }
 
 func (e entity) showStats() {
@@ -110,7 +112,7 @@ func (e *entity) battle(attack int, other *entity) {
 		if other.attacks[0].damage >= e.hp {
 			e.hp = 0
 			e.alive = false
-			fmt.Println("\nYou died a horrible death...")
+			fmt.Println("You died a horrible death...")
 		} else {
 			if rand.Intn(10) > 8 {
 				if other.mp >= other.attacks[1].cost {

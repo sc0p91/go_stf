@@ -74,7 +74,7 @@ func gameLoop() {
 		}
 
 		if !enemy.alive && player.alive {
-			fmt.Printf("\nYou killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
+			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
 			player.gainExp(enemy.exp)
 
 			enemy = newEnemy(player.lvl)
