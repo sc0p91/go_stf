@@ -24,7 +24,7 @@ func newPlayer() *entity {
 		"What Class would you like to be?\n",
 		"[W] Warrior - Mighty & Strong Sword Fighter\n",
 		"[M] Mage - Powerfull Glasscanon Spellcaster\n",
-		"[P] Paladin - Rightful Fighter rof the Light\n",
+		"[P] Paladin - Rightful Fighter of the Light\n",
 		"[R] Ranger - Distant Fighter with Bow and Arrow\n")
 
 	for p.class.name == "" {
