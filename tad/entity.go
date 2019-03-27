@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 type entity struct {
 	alive  bool
@@ -104,13 +107,23 @@ func (e *entity) battle(attack int, other *entity) {
 		fmt.Println("You don't have enough mana")
 	}
 	if other.alive {
-		fmt.Println(other.name, other.attacks[0].name, "you for ", other.attacks[0].damage, "dmg")
 		if other.attacks[0].damage >= e.hp {
 			e.hp = 0
 			e.alive = false
-			fmt.Println("you dead lol")
+			fmt.Println("You died a horrible death...")
 		} else {
-			e.hp -= other.attacks[0].damage
+			if rand.Intn(10) > 8 {
+				if other.mp >= other.attacks[1].cost {
+					fmt.Println(other.name, other.attacks[1].name, "you for ", other.attacks[1].damage, "dmg")
+					e.hp -= other.attacks[1].damage
+					other.mp -= other.attacks[1].cost
+				} else {
+					fmt.Println(other.name, "misses its attack")
+				}
+			} else {
+				fmt.Println(other.name, other.attacks[0].name, "you for ", other.attacks[0].damage, "dmg")
+				e.hp -= other.attacks[0].damage
+			}
 		}
 	}
 }

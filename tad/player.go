@@ -46,10 +46,10 @@ func newPlayer() *entity {
 		}
 	}
 	p.name = strings.Replace(pname, "\n", "", -1)
-	p.hp = 100
-	p.mp = 100
-	p.maxHp = 100
-	p.maxMp = 100
+	p.hp = 100 + p.stats["sta"]*10
+	p.mp = 100 + p.stats["int"]*10
+	p.maxHp = p.hp
+	p.maxMp = p.mp
 	p.maxExp = 100
 	p.lvl = 1
 	p.player = true

@@ -209,6 +209,14 @@ var attackTemplates = map[string]attack{
 		cost:     1,
 		slot:     0,
 	},
+	"Strike": attack{
+		name:     "strikes",
+		damage:   6,
+		lvlreq:   1,
+		classreq: classTemplates["humanoid"],
+		cost:     25,
+		slot:     1,
+	},
 	// ANIMALS
 	"Bite": attack{
 		name:     "bites",
@@ -217,5 +225,13 @@ var attackTemplates = map[string]attack{
 		classreq: classTemplates["animal"],
 		cost:     1,
 		slot:     0,
+	},
+	"Scratche": attack{
+		name:     "scratches",
+		damage:   6,
+		lvlreq:   1,
+		classreq: classTemplates["animal"],
+		cost:     25,
+		slot:     1,
 	},
 }

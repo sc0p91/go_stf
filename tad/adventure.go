@@ -7,7 +7,7 @@ import (
 )
 
 func clear() {
-	//fmt.Println("\033[2J")
+	fmt.Println("\033[2J")
 	fmt.Println("")
 }
 
@@ -34,13 +34,13 @@ func gameLoop() {
 		case "r", "R":
 			player.battle(3, enemy)
 		case "a", "A":
-			fmt.Println("This Program.")
+			fmt.Println("Not implemented yet.")
 		case "s", "S":
-			fmt.Println("This Program.")
+			fmt.Println("Not implemented yet.")
 		case "d", "D":
-			fmt.Println("This Program.")
+			fmt.Println("Not implemented yet.")
 		case "f", "F":
-			fmt.Println("This Program.")
+			fmt.Println("Not implemented yet.")
 		case "x", "X":
 			fmt.Println("Bye")
 			os.Exit(0)
