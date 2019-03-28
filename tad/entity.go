@@ -66,9 +66,7 @@ func (e *entity) gainExp(exp int) {
 
 func (e *entity) levelUp() {
 	e.lvl++
-	e.statRecalc()
-	e.hp = e.maxHp
-	e.mp = e.maxMp
+
 	e.exp = e.exp - e.maxExp
 	e.maxExp = e.maxExp * 2
 
@@ -79,6 +77,11 @@ func (e *entity) levelUp() {
 			e.stats[s] += 2
 		}
 	}
+
+	e.hp = e.maxHp
+	e.mp = e.maxMp
+
+	e.statRecalc()
 
 	for _, a := range attackTemplates {
 		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
@@ -104,8 +107,7 @@ func (e *entity) getItem() {
 
 	var slot int
 	item := rand.Intn(3)
-	//luck := rand.Intn(4)
-	luck := 1
+	luck := rand.Intn(3)
 
 	if e.items[0].name == "none" {
 		slot = 0
@@ -123,20 +125,27 @@ func (e *entity) getItem() {
 			e.items[slot] = itemTemplates["rob"]
 		case 3:
 			e.items[slot] = itemTemplates["rog"]
-		default:
-			// get somehow one of the items
-			fmt.Println("\nWould insert something into Slot ", slot+1, "\n ")
 		}
 		// Recalculate Stats with item
+		e.equpItem(slot)
 		e.statRecalc()
 	} else {
 		e.potions++
 	}
 }
 
+func (e *entity) equpItem(slot int) {
+	e.stats[e.items[slot].smod] += e.items[slot].multi
+}
+
+func (e *entity) unequpItem(slot int) {
+	e.stats[e.items[slot].smod] -= e.items[slot].multi
+	e.items[slot] = itemTemplates["none"]
+}
+
 func (e *entity) usePotion() {
 	if e.potions < 1 {
-		fmt.Println("\nNo Potions left...\n ")
+		fmt.Println("\nNo Potions left... ")
 	} else {
 		e.potions--
 
@@ -179,8 +188,8 @@ func (e entity) showStats() {
 		" STA ", e.stats["sta"], "\t\tSTR\t", e.stats["str"], "\n",
 		" DEX ", e.stats["dex"], "\t\tINT\t", e.stats["int"], "\n")
 	if e.player {
-		fmt.Print(" Itemslot 1:\t", e.items[0], "\n")
-		fmt.Print(" Itemslot 2:\t", e.items[1], "\n")
+		fmt.Print(" Itemslot 1:\t", e.items[0].name, "\n")
+		fmt.Print(" Itemslot 2:\t", e.items[1].name, "\n")
 	}
 	fmt.Print("≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
 }

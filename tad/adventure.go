@@ -59,8 +59,10 @@ func gameLoop() {
 			player.battle(3, enemy)
 		case "a", "A":
 			fmt.Println("drop ", player.items[0].name, "\n ")
+			player.unequpItem(0)
 		case "s", "S":
 			fmt.Println("drop ", player.items[1].name, "\n ")
+			player.unequpItem(1)
 		case "d", "D":
 			player.usePotion()
 		case "f", "F":
