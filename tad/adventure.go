@@ -58,19 +58,20 @@ func gameLoop() {
 		case "r", "R":
 			player.battle(3, enemy)
 		case "a", "A":
-			fmt.Println("Not implemented yet.")
+			fmt.Println("drop ", player.items[0].name, "\n ")
 		case "s", "S":
-			fmt.Println("Not implemented yet.")
+			fmt.Println("drop ", player.items[1].name, "\n ")
 		case "d", "D":
-			fmt.Println("Not implemented yet.")
+			player.usePotion()
 		case "f", "F":
-			fmt.Println("Not implemented yet.")
+			fmt.Println("\n...zzz ZZZ zzz...")
 		case "x", "X":
 			fmt.Println("Bye")
 			os.Exit(0)
 		case "":
+			fmt.Println("\n ")
 		default:
-			fmt.Print("\"", action, "\" not recognized. Please choose a provided Action\n")
+			fmt.Print("\n\"", action, "\" not recognized. Please choose a provided Action\n")
 		}
 
 		if !enemy.alive && player.alive {
@@ -104,9 +105,9 @@ func (p entity) menu() {
 		" [W] ", p.attacks[1].name, " (MP: ", p.attacks[1].cost, ") \n",
 		" [E] ", p.attacks[2].name, " (MP: ", p.attacks[2].cost, ") \n",
 		" [R] ", p.attacks[3].name, " (MP: ", p.attacks[3].cost, ") \n",
-		" [A] Placeholder Item1\n",
-		" [S] Placeholder Item2\n",
-		" [D] Restore HP|MP    \n",
+		" [A] Drop Item 1 \n",
+		" [S] Drop Item 2 \n",
+		" [D] Restore HP&MP (#: ", p.potions, ")\n",
 		" [F] Do nothing.      \n",
 		" [X] quit             \n",
 		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",

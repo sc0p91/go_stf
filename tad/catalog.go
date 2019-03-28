@@ -40,19 +40,19 @@ var entityTemplates = map[string]entity{
 	"humanoid": entity{
 		class: classTemplates["humanoid"],
 		stats: map[string]int{
-			"sta": 5,
+			"sta": 4,
 			"str": 5,
-			"dex": 5,
+			"dex": 6,
 			"int": 5,
 		},
 	},
 	"animal": entity{
 		class: classTemplates["animal"],
 		stats: map[string]int{
-			"sta": 6,
-			"str": 4,
-			"dex": 6,
-			"int": 4,
+			"sta": 4,
+			"str": 6,
+			"dex": 4,
+			"int": 6,
 		},
 	},
 }
@@ -118,7 +118,7 @@ var attackTemplates = map[string]attack{
 	},
 	"Execute": attack{
 		name:     "Execute",
-		damage:   80,
+		damage:   100,
 		lvlreq:   5,
 		classreq: classTemplates["warrior"],
 		cost:     50,
@@ -143,7 +143,7 @@ var attackTemplates = map[string]attack{
 	},
 	"Ice Beam": attack{
 		name:     "Ice Beam",
-		damage:   75,
+		damage:   95,
 		lvlreq:   5,
 		classreq: classTemplates["mage"],
 		cost:     50,
@@ -168,7 +168,7 @@ var attackTemplates = map[string]attack{
 	},
 	"Rain of Arrows": attack{
 		name:     "Rain of Arrows",
-		damage:   70,
+		damage:   90,
 		lvlreq:   5,
 		classreq: classTemplates["ranger"],
 		cost:     45,
@@ -193,7 +193,7 @@ var attackTemplates = map[string]attack{
 	},
 	"Sword of Justice": attack{
 		name:     "Sword of Justice",
-		damage:   65,
+		damage:   95,
 		lvlreq:   5,
 		classreq: classTemplates["paladin"],
 		cost:     45,
@@ -233,5 +233,33 @@ var attackTemplates = map[string]attack{
 		classreq: classTemplates["animal"],
 		cost:     25,
 		slot:     1,
+	},
+}
+
+var itemTemplates = map[string]item{
+	"row": item{
+		name:  "Ring of Wisdom",
+		multi: 5,
+		smod:  "int",
+	},
+	"roh": item{
+		name:  "Ring of Haste",
+		multi: 5,
+		smod:  "dex",
+	},
+	"rog": item{
+		name:  "Ring of Giants",
+		multi: 5,
+		smod:  "sta",
+	},
+	"rob": item{
+		name:  "Ring of the Berserker",
+		multi: 5,
+		smod:  "str",
+	},
+	"none": item{
+		name:  "none",
+		multi: 0,
+		smod:  "str",
 	},
 }

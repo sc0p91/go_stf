@@ -54,6 +54,9 @@ func newPlayer() *entity {
 	p.lvl = 1
 	p.player = true
 	p.alive = true
+	p.items[0] = itemTemplates["none"]
+	p.items[1] = itemTemplates["none"]
+	p.potions = 3
 
 	fmt.Print("A ", p.class.name, " it is!\n",
 		"[Hit enter to begin your journey]")

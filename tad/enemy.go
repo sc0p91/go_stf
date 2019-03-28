@@ -30,18 +30,18 @@ func newEnemy(scale int) *entity {
 		e.name = "Bat"
 	}
 
-	e.hp = (e.stats["sta"] + rand.Intn(5)) * 10 * scale
+	e.hp = (e.stats["sta"] + rand.Intn(3)) * 10 * scale
 	e.mp = 100
 	e.maxHp = e.hp
 	e.maxMp = e.mp
-	e.exp = 30 * scale
+	e.exp = 35 * (scale + scale)
 	e.lvl = scale
 	e.player = false
 	e.alive = true
-	e.stats["str"] += scale
-	e.stats["sta"] += scale
-	e.stats["dex"] += scale
-	e.stats["int"] += scale
+	e.stats["str"] = e.stats["str"] + scale
+	e.stats["sta"] = e.stats["sta"] + scale
+	e.stats["dex"] = e.stats["dex"] + scale
+	e.stats["int"] = e.stats["int"] + scale
 
 	for _, a := range attackTemplates {
 		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
