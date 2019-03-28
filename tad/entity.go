@@ -78,10 +78,10 @@ func (e *entity) levelUp() {
 		}
 	}
 
+	e.statRecalc()
+
 	e.hp = e.maxHp
 	e.mp = e.maxMp
-
-	e.statRecalc()
 
 	for _, a := range attackTemplates {
 		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
@@ -136,11 +136,13 @@ func (e *entity) getItem() {
 
 func (e *entity) equpItem(slot int) {
 	e.stats[e.items[slot].smod] += e.items[slot].multi
+	e.statRecalc()
 }
 
 func (e *entity) unequpItem(slot int) {
 	e.stats[e.items[slot].smod] -= e.items[slot].multi
 	e.items[slot] = itemTemplates["none"]
+	e.statRecalc()
 }
 
 func (e *entity) usePotion() {
