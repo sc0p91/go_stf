@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
 )
@@ -55,8 +54,6 @@ func newEnemy(scale int) *Entity {
 			e.attacks[a.slot].cost = a.cost + 2*e.lvl
 		}
 	}
-
-	fmt.Println(e.attacks)
 
 	return &e
 }

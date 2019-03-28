@@ -86,7 +86,7 @@ func (e *Entity) levelUp() {
 	for _, a := range attackTemplates {
 		if a.classreq == e.class.name && e.lvl >= a.lvlreq {
 			e.attacks[a.slot] = a
-			e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
+			e.attacks[a.slot].damage = a.damage + e.stats[e.primary] + e.lvl
 			e.attacks[a.slot].cost = a.cost + 2*e.lvl
 		}
 	}
@@ -94,8 +94,8 @@ func (e *Entity) levelUp() {
 }
 
 func (e *Entity) statRecalc() {
-	e.maxHp = ((e.stats["sta"] + 5) * 2) * 10
-	e.maxMp = (30 + e.stats["int"]) * 10
+	e.maxHp = ((e.stats["sta"] + 5) * 10) * e.lvl
+	e.maxMp = (e.stats["int"] + 2) * 10 * e.lvl
 
 	e.attacks[0].damage = e.stats["str"] + 25
 }
@@ -105,8 +105,8 @@ func (e *Entity) getItem() {
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
 
-	var slot int
-	item := rand.Intn(3)
+	slot := 3
+	item := rand.Intn(12)
 	luck := rand.Intn(3)
 
 	if e.items[0].name == "none" {
@@ -115,16 +115,24 @@ func (e *Entity) getItem() {
 		slot = 1
 	}
 
-	if luck == 1 {
+	if luck == 1 && slot != 3 {
 		switch item {
-		case 0:
+		case 0, 1:
 			e.items[slot] = itemTemplates["roh"]
-		case 1:
+		case 2, 3:
 			e.items[slot] = itemTemplates["row"]
-		case 2:
+		case 4, 5:
 			e.items[slot] = itemTemplates["rob"]
-		case 3:
+		case 6, 7:
 			e.items[slot] = itemTemplates["rog"]
+		case 8:
+			e.items[slot] = itemTemplates["noh"]
+		case 9:
+			e.items[slot] = itemTemplates["now"]
+		case 10:
+			e.items[slot] = itemTemplates["nob"]
+		case 11:
+			e.items[slot] = itemTemplates["nog"]
 		}
 		// Recalculate Stats with item
 		e.equpItem(slot)
@@ -202,34 +210,49 @@ func (e *Entity) battle(attack int, other *Entity) {
 	rand.Seed(time.Now().UnixNano())
 
 	if e.mp >= e.attacks[attack].cost {
-		if other.hp > 0 && e.attacks[attack].damage < other.hp {
-			fmt.Println("You hit the", other.Name, "for", e.attacks[attack].damage, "dmg")
-			other.hp -= e.attacks[attack].damage
+		pdmg := e.attacks[attack].damage + rand.Intn(e.lvl)
+		dice := rand.Intn(20) + 1
+
+		if other.hp > 0 && pdmg < other.hp {
+			if dice == 20 {
+				fmt.Println("CRITICAL HIT!", pdmg*2, "DMG!")
+				other.hp -= pdmg * 2
+			} else if dice == 1 {
+				fmt.Println("Your attacked missed...")
+			} else {
+				fmt.Println("You hit the", other.Name, "for", pdmg, "dmg")
+				other.hp -= pdmg
+			}
 		} else {
 			other.hp = 0
 			other.Alive = false
 		}
+
 		e.mp -= e.attacks[attack].cost
+
 	} else {
 		fmt.Println("You don't have enough mana")
 	}
+
 	if other.Alive {
-		if other.attacks[0].damage >= e.hp {
+		edmg := other.attacks[1].damage + rand.Intn(e.lvl)
+
+		if edmg >= e.hp {
 			e.hp = 0
 			e.Alive = false
 			fmt.Println("You died a horrible death...")
 		} else {
 			if rand.Intn(10) > 8 {
 				if other.mp >= other.attacks[1].cost {
-					fmt.Println(other.Name, other.attacks[1].name, "you for ", other.attacks[1].damage, "dmg")
-					e.hp -= other.attacks[1].damage
+					fmt.Println(other.Name, other.attacks[1].name, "you for ", edmg, "dmg")
+					e.hp -= edmg
 					other.mp -= other.attacks[1].cost
 				} else {
 					fmt.Println(other.Name, "misses its attack")
 				}
 			} else {
-				fmt.Println(other.Name, other.attacks[0].name, "you for ", other.attacks[0].damage, "dmg")
-				e.hp -= other.attacks[0].damage
+				fmt.Println(other.Name, other.attacks[0].name, "you for ", edmg, "dmg")
+				e.hp -= edmg
 			}
 		}
 	}

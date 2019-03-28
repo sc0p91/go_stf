@@ -257,6 +257,26 @@ var itemTemplates = map[string]item{
 		multi: 5,
 		smod:  "str",
 	},
+	"now": item{
+		name:  "Necklace of Wisdom",
+		multi: 5,
+		smod:  "int",
+	},
+	"noh": item{
+		name:  "Necklace of Haste",
+		multi: 10,
+		smod:  "dex",
+	},
+	"nog": item{
+		name:  "Necklace of Giants",
+		multi: 10,
+		smod:  "sta",
+	},
+	"nob": item{
+		name:  "Necklace of the Berserker",
+		multi: 10,
+		smod:  "str",
+	},
 	"none": item{
 		name:  "none",
 		multi: 0,
