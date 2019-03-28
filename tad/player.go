@@ -8,11 +8,11 @@ import (
 	"strings"
 )
 
-func newPlayer() *entity {
-	p := entity{}
+func NewPlayer() *Entity {
+	p := Entity{}
 
 	// Set Player Name
-	fmt.Println("Welcome Adventurer!\nWhat's your name?")
+	fmt.Println("Welcome Adventurer!\nWhat's your Name?")
 	reader := bufio.NewReader(os.Stdin)
 	pname, err := reader.ReadString('\n')
 	if err != nil {
@@ -45,15 +45,15 @@ func newPlayer() *entity {
 			break
 		}
 	}
-	p.name = strings.Replace(pname, "\n", "", -1)
+	p.Name = strings.Replace(pname, "\n", "", -1)
 	p.hp = 100 + p.stats["sta"]*10
 	p.mp = 100 + p.stats["int"]*10
 	p.maxHp = p.hp
 	p.maxMp = p.mp
 	p.maxExp = 100
 	p.lvl = 1
-	p.player = true
-	p.alive = true
+	p.Player = true
+	p.Alive = true
 	p.items[0] = itemTemplates["none"]
 	p.items[1] = itemTemplates["none"]
 	p.potions = 3

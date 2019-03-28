@@ -37,12 +37,12 @@ func clear() {
 
 func gameLoop() {
 
-	player := newPlayer()
+	player := NewPlayer()
 	enemy := newEnemy(player.lvl)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	for scanner.Scan() && player.alive {
+	for scanner.Scan() && player.Alive {
 
 		// Clear the screen for every iteration
 		clear()
@@ -76,8 +76,8 @@ func gameLoop() {
 			fmt.Print("\n\"", action, "\" not recognized. Please choose a provided Action\n")
 		}
 
-		if !enemy.alive && player.alive {
-			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.name, enemy.exp)
+		if !enemy.Alive && player.Alive {
+			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.Name, enemy.exp)
 			player.gainExp(enemy.exp)
 
 			enemy = newEnemy(player.lvl)
@@ -93,7 +93,7 @@ func gameLoop() {
 	}
 }
 
-func (p entity) menu() {
+func (p Entity) menu() {
 
 	for i := 0; i < 4; i++ {
 		if p.attacks[i].name == "" {

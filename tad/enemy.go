@@ -1,55 +1,62 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
 
-func newEnemy(scale int) *entity {
+func newEnemy(scale int) *Entity {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
 
 	// Set Enemy
-	e := entity{}
 
+	e := Entity{}
+	var className string
 	class := rand.Intn(4)
 
 	switch class {
 	case 0:
-		e = entityTemplates["humanoid"]
-		e.name = "Soldier"
+		className = "humanoid"
+		e.Name = "Soldier"
 	case 1:
-		e = entityTemplates["humanoid"]
-		e.name = "Ghoul"
+		className = "humanoid"
+		e.Name = "Ghoul"
 	case 2:
-		e = entityTemplates["animal"]
-		e.name = "Wolf"
+		className = "animal"
+		e.Name = "Wolf"
 	case 3:
-		e = entityTemplates["animal"]
-		e.name = "Bat"
+		className = "animal"
+		e.Name = "Bat"
 	}
 
-	e.hp = (e.stats["sta"] + rand.Intn(3)) * 10 * scale
+	e.class.name = className
+	e.class.primary = classTemplates[className].primary
+	e.stats = map[string]int{}
 	e.mp = 100
-	e.maxHp = e.hp
 	e.maxMp = e.mp
 	e.exp = 35 * (scale + scale)
 	e.lvl = scale
-	e.player = false
-	e.alive = true
-	e.stats["str"] = e.stats["str"] + scale
-	e.stats["sta"] = e.stats["sta"] + scale
-	e.stats["dex"] = e.stats["dex"] + scale
-	e.stats["int"] = e.stats["int"] + scale
+	e.Player = false
+	e.Alive = true
+	e.stats["str"] = entityTemplates[className].stats["str"] + scale
+	e.stats["sta"] = entityTemplates[className].stats["sta"] + scale
+	e.stats["dex"] = entityTemplates[className].stats["dex"] + scale
+	e.stats["int"] = entityTemplates[className].stats["int"] + scale
+	e.hp = (e.stats["sta"] + rand.Intn(3)) * 10 * scale
+	e.maxHp = e.hp
 
 	for _, a := range attackTemplates {
-		if a.classreq.name == e.class.name && e.lvl >= a.lvlreq {
+		if a.classreq == e.class.name && e.lvl >= a.lvlreq {
 			e.attacks[a.slot] = a
 			e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
 			e.attacks[a.slot].cost = a.cost + 2*e.lvl
 		}
 	}
+
+	fmt.Println(e.attacks)
 
 	return &e
 }
