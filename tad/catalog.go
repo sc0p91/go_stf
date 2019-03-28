@@ -1,7 +1,7 @@
 package main
 
-var entityTemplates = map[string]entity{
-	"mage": entity{
+var entityTemplates = map[string]Entity{
+	"mage": Entity{
 		class: classTemplates["mage"],
 		stats: map[string]int{
 			"sta": 5,
@@ -10,7 +10,7 @@ var entityTemplates = map[string]entity{
 			"int": 10,
 		},
 	},
-	"warrior": entity{
+	"warrior": Entity{
 		class: classTemplates["warrior"],
 		stats: map[string]int{
 			"sta": 7,
@@ -19,7 +19,7 @@ var entityTemplates = map[string]entity{
 			"int": 2,
 		},
 	},
-	"paladin": entity{
+	"paladin": Entity{
 		class: classTemplates["paladin"],
 		stats: map[string]int{
 			"sta": 5,
@@ -28,7 +28,7 @@ var entityTemplates = map[string]entity{
 			"int": 5,
 		},
 	},
-	"ranger": entity{
+	"ranger": Entity{
 		class: classTemplates["ranger"],
 		stats: map[string]int{
 			"sta": 6,
@@ -37,7 +37,7 @@ var entityTemplates = map[string]entity{
 			"int": 4,
 		},
 	},
-	"humanoid": entity{
+	"humanoid": Entity{
 		class: classTemplates["humanoid"],
 		stats: map[string]int{
 			"sta": 4,
@@ -46,7 +46,7 @@ var entityTemplates = map[string]entity{
 			"int": 5,
 		},
 	},
-	"animal": entity{
+	"animal": Entity{
 		class: classTemplates["animal"],
 		stats: map[string]int{
 			"sta": 4,
@@ -59,19 +59,19 @@ var entityTemplates = map[string]entity{
 
 var classTemplates = map[string]class{
 	"mage": class{
-		name:    "Mage",
+		name:    "mage",
 		primary: "int",
 	},
 	"warrior": class{
-		name:    "Warrior",
+		name:    "warrior",
 		primary: "str",
 	},
 	"paladin": class{
-		name:    "Paladin",
+		name:    "paladin",
 		primary: "sta",
 	},
 	"ranger": class{
-		name:    "Ranger",
+		name:    "ranger",
 		primary: "dex",
 	},
 	"any": class{
@@ -79,11 +79,11 @@ var classTemplates = map[string]class{
 		primary: "str",
 	},
 	"humanoid": class{
-		name:    "Humanoid",
+		name:    "humanoid",
 		primary: "str",
 	},
 	"animal": class{
-		name:    "Animal",
+		name:    "animal",
 		primary: "dex",
 	},
 }
@@ -94,7 +94,7 @@ var attackTemplates = map[string]attack{
 		name:     "Unarmed Strike",
 		damage:   25,
 		lvlreq:   1,
-		classreq: classTemplates["any"],
+		classreq: "any",
 		slot:     0,
 	},
 
@@ -104,7 +104,7 @@ var attackTemplates = map[string]attack{
 		name:     "Obliterate",
 		damage:   30,
 		lvlreq:   2,
-		classreq: classTemplates["warrior"],
+		classreq: "warrior",
 		cost:     5,
 		slot:     1,
 	},
@@ -112,7 +112,7 @@ var attackTemplates = map[string]attack{
 		name:     "Mortal Strike",
 		damage:   40,
 		lvlreq:   3,
-		classreq: classTemplates["warrior"],
+		classreq: "warrior",
 		cost:     15,
 		slot:     2,
 	},
@@ -120,7 +120,7 @@ var attackTemplates = map[string]attack{
 		name:     "Execute",
 		damage:   100,
 		lvlreq:   5,
-		classreq: classTemplates["warrior"],
+		classreq: "warrior",
 		cost:     50,
 		slot:     3,
 	},
@@ -129,7 +129,7 @@ var attackTemplates = map[string]attack{
 		name:     "Lightning Bolt",
 		damage:   25,
 		lvlreq:   2,
-		classreq: classTemplates["mage"],
+		classreq: "mage",
 		cost:     5,
 		slot:     1,
 	},
@@ -137,7 +137,7 @@ var attackTemplates = map[string]attack{
 		name:     "Fireball",
 		damage:   35,
 		lvlreq:   3,
-		classreq: classTemplates["mage"],
+		classreq: "mage",
 		cost:     8,
 		slot:     2,
 	},
@@ -145,7 +145,7 @@ var attackTemplates = map[string]attack{
 		name:     "Ice Beam",
 		damage:   95,
 		lvlreq:   5,
-		classreq: classTemplates["mage"],
+		classreq: "mage",
 		cost:     50,
 		slot:     3,
 	},
@@ -154,7 +154,7 @@ var attackTemplates = map[string]attack{
 		name:     "Cobra Shot",
 		damage:   25,
 		lvlreq:   2,
-		classreq: classTemplates["ranger"],
+		classreq: "ranger",
 		cost:     5,
 		slot:     1,
 	},
@@ -162,7 +162,7 @@ var attackTemplates = map[string]attack{
 		name:     "Poison Arrow",
 		damage:   35,
 		lvlreq:   3,
-		classreq: classTemplates["ranger"],
+		classreq: "ranger",
 		cost:     10,
 		slot:     2,
 	},
@@ -170,7 +170,7 @@ var attackTemplates = map[string]attack{
 		name:     "Rain of Arrows",
 		damage:   90,
 		lvlreq:   5,
-		classreq: classTemplates["ranger"],
+		classreq: "ranger",
 		cost:     45,
 		slot:     3,
 	},
@@ -179,7 +179,7 @@ var attackTemplates = map[string]attack{
 		name:     "Holy Light",
 		damage:   25,
 		lvlreq:   2,
-		classreq: classTemplates["paladin"],
+		classreq: "paladin",
 		cost:     5,
 		slot:     1,
 	},
@@ -187,7 +187,7 @@ var attackTemplates = map[string]attack{
 		name:     "Divine Storm",
 		damage:   40,
 		lvlreq:   3,
-		classreq: classTemplates["paladin"],
+		classreq: "paladin",
 		cost:     12,
 		slot:     2,
 	},
@@ -195,7 +195,7 @@ var attackTemplates = map[string]attack{
 		name:     "Sword of Justice",
 		damage:   95,
 		lvlreq:   5,
-		classreq: classTemplates["paladin"],
+		classreq: "paladin",
 		cost:     45,
 		slot:     3,
 	},
@@ -205,7 +205,7 @@ var attackTemplates = map[string]attack{
 		name:     "punches",
 		damage:   3,
 		lvlreq:   1,
-		classreq: classTemplates["humanoid"],
+		classreq: "humanoid",
 		cost:     1,
 		slot:     0,
 	},
@@ -213,7 +213,7 @@ var attackTemplates = map[string]attack{
 		name:     "strikes",
 		damage:   6,
 		lvlreq:   1,
-		classreq: classTemplates["humanoid"],
+		classreq: "humanoid",
 		cost:     25,
 		slot:     1,
 	},
@@ -222,7 +222,7 @@ var attackTemplates = map[string]attack{
 		name:     "bites",
 		damage:   3,
 		lvlreq:   1,
-		classreq: classTemplates["animal"],
+		classreq: "animal",
 		cost:     1,
 		slot:     0,
 	},
@@ -230,7 +230,7 @@ var attackTemplates = map[string]attack{
 		name:     "scratches",
 		damage:   6,
 		lvlreq:   1,
-		classreq: classTemplates["animal"],
+		classreq: "animal",
 		cost:     25,
 		slot:     1,
 	},
