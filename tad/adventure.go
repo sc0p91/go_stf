@@ -38,7 +38,7 @@ func clear() {
 func gameLoop() {
 
 	player := NewPlayer()
-	enemy := newEnemy(player.lvl)
+	enemy := NewEnemy(player.Lvl)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -58,10 +58,10 @@ func gameLoop() {
 		case "r", "R":
 			player.battle(3, enemy)
 		case "a", "A":
-			fmt.Println("drop ", player.items[0].name, "\n ")
+			fmt.Println("drop ", player.Items[0].Name, "\n ")
 			player.unequpItem(0)
 		case "s", "S":
-			fmt.Println("drop ", player.items[1].name, "\n ")
+			fmt.Println("drop ", player.Items[1].Name, "\n ")
 			player.unequpItem(1)
 		case "d", "D":
 			player.usePotion()
@@ -77,10 +77,10 @@ func gameLoop() {
 		}
 
 		if !enemy.Alive && player.Alive {
-			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.Name, enemy.exp)
-			player.gainExp(enemy.exp)
+			fmt.Printf("You killed %s, you gained %d Exp.\n", enemy.Name, enemy.Exp)
+			player.gainExp(enemy.Exp)
 
-			enemy = newEnemy(player.lvl)
+			enemy = NewEnemy(player.Lvl)
 		}
 		// Show E & P Stats + Actions
 		fmt.Println("\n‗========= OPPONENT =========‗")
@@ -96,20 +96,20 @@ func gameLoop() {
 func (p Entity) menu() {
 
 	for i := 0; i < 4; i++ {
-		if p.attacks[i].name == "" {
-			p.attacks[i].name = "Not unlocked"
+		if p.Attacks[i].Name == "" {
+			p.Attacks[i].Name = "Not unlocked"
 		}
 	}
 
 	fmt.Print(
 		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.attacks[0].name, " (MP: ", p.attacks[0].cost, ") \n",
-		" [W] ", p.attacks[1].name, " (MP: ", p.attacks[1].cost, ") \n",
-		" [E] ", p.attacks[2].name, " (MP: ", p.attacks[2].cost, ") \n",
-		" [R] ", p.attacks[3].name, " (MP: ", p.attacks[3].cost, ") \n",
+		" [Q] ", p.Attacks[0].Name, " (MP: ", p.Attacks[0].Cost, ") \n",
+		" [W] ", p.Attacks[1].Name, " (MP: ", p.Attacks[1].Cost, ") \n",
+		" [E] ", p.Attacks[2].Name, " (MP: ", p.Attacks[2].Cost, ") \n",
+		" [R] ", p.Attacks[3].Name, " (MP: ", p.Attacks[3].Cost, ") \n",
 		" [A] Drop Item 1 \n",
 		" [S] Drop Item 2 \n",
-		" [D] Restore HP&MP (#: ", p.potions, ")\n",
+		" [D] Restore HP&MP (#: ", p.Potions, ")\n",
 		" [F] Do nothing.      \n",
 		" [X] quit             \n",
 		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",

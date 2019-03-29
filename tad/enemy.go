@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func newEnemy(scale int) *Entity {
+func NewEnemy(scale int) *Entity {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
@@ -31,27 +31,27 @@ func newEnemy(scale int) *Entity {
 		e.Name = "Bat"
 	}
 
-	e.class.name = className
-	e.class.primary = classTemplates[className].primary
-	e.stats = map[string]int{}
-	e.mp = 100
-	e.maxMp = e.mp
-	e.exp = 35 * (scale + scale)
-	e.lvl = scale
+	e.Class.Name = className
+	e.Class.Primary = classTemplates[className].Primary
+	e.Stats = map[string]int{}
+	e.Mp = 100
+	e.MaxMp = e.Mp
+	e.Exp = 35 * (scale + scale)
+	e.Lvl = scale
 	e.Player = false
 	e.Alive = true
-	e.stats["str"] = entityTemplates[className].stats["str"] + scale
-	e.stats["sta"] = entityTemplates[className].stats["sta"] + scale
-	e.stats["dex"] = entityTemplates[className].stats["dex"] + scale
-	e.stats["int"] = entityTemplates[className].stats["int"] + scale
-	e.hp = (e.stats["sta"] + rand.Intn(3)) * 10 * scale
-	e.maxHp = e.hp
+	e.Stats["str"] = entityTemplates[className].Stats["str"] + scale
+	e.Stats["sta"] = entityTemplates[className].Stats["sta"] + scale
+	e.Stats["dex"] = entityTemplates[className].Stats["dex"] + scale
+	e.Stats["int"] = entityTemplates[className].Stats["int"] + scale
+	e.Hp = (e.Stats["sta"] + rand.Intn(3)) * 10 * scale
+	e.MaxHp = e.Hp
 
 	for _, a := range attackTemplates {
-		if a.classreq == e.class.name && e.lvl >= a.lvlreq {
-			e.attacks[a.slot] = a
-			e.attacks[a.slot].damage = a.damage + e.stats[e.primary]
-			e.attacks[a.slot].cost = a.cost + 2*e.lvl
+		if a.ClassReq == e.Class.Name && e.Lvl >= a.LvlReq {
+			e.Attacks[a.Slot] = a
+			e.Attacks[a.Slot].Damage = a.Damage + e.Stats[e.Primary]
+			e.Attacks[a.Slot].Cost = a.Cost + 2*e.Lvl
 		}
 	}
 
