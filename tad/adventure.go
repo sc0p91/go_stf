@@ -4,37 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/sc0p91/tad/game"
+	"github.com/sc0p91/tad/util"
 	"os"
-	"os/exec"
-	"runtime"
 )
-
-var clr map[string]func()
-
-func init() {
-	clr = make(map[string]func())
-	clr["linux"] = func() {
-		// Linux Clear
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	}
-	clr["windows"] = func() {
-		// Windows Clear
-		cmd := exec.Command("cmd", "/c", "cls")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	}
-}
-
-func clear() {
-	value, ok := clr[runtime.GOOS]
-	if ok {
-		value()
-	} else {
-		panic("Your platform is unsupported! I can't clear terminal screen :(")
-	}
-}
 
 func gameLoop() {
 
@@ -46,7 +18,7 @@ func gameLoop() {
 	for scanner.Scan() && player.Alive {
 
 		// Clear the screen for every iteration
-		clear()
+		util.Clear()
 
 		action := scanner.Text()
 		switch action {
