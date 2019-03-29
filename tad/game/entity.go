@@ -258,26 +258,3 @@ func (e *Entity) Battle(attack int, other *Entity) {
 	}
 }
 
-func (p Entity) Menu() {
-
-	for i := 0; i < 4; i++ {
-		if p.Attacks[i].Name == "" {
-			p.Attacks[i].Name = "Not unlocked"
-		}
-	}
-
-	fmt.Print(
-		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.Attacks[0].Name, " (MP: ", p.Attacks[0].Cost, ") \n",
-		" [W] ", p.Attacks[1].Name, " (MP: ", p.Attacks[1].Cost, ") \n",
-		" [E] ", p.Attacks[2].Name, " (MP: ", p.Attacks[2].Cost, ") \n",
-		" [R] ", p.Attacks[3].Name, " (MP: ", p.Attacks[3].Cost, ") \n",
-		" [A] Drop Item 1 \n",
-		" [S] Drop Item 2 \n",
-		" [D] Restore HP&MP (#: ", p.Potions, ")\n",
-		" [F] Do nothing.      \n",
-		" [X] quit             \n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
-	)
-}
-

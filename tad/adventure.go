@@ -62,7 +62,7 @@ func gameLoop() {
 		fmt.Println("‗========== PLAYER ==========‗")
 		player.ShowStats()
 
-		player.Menu()
+		util.Menu(*player)
 	}
 }
 
