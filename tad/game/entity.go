@@ -1,4 +1,4 @@
-package main
+package game
 
 import (
 	"fmt"
@@ -45,7 +45,7 @@ type Attack struct {
 	Slot     int
 }
 
-func (e *Entity) gainExp(exp int) {
+func (e *Entity) GainExp(exp int) {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
@@ -53,10 +53,10 @@ func (e *Entity) gainExp(exp int) {
 	e.Exp += exp
 	if e.Exp >= e.MaxExp {
 		fmt.Println("You leveled up!")
-		e.levelUp()
+		e.LevelUp()
 	} else {
 		if rand.Intn(5) > 0 {
-			e.getItem()
+			e.GetItem()
 			fmt.Println("You found an Item!")
 		} else {
 			fmt.Println(" ")
@@ -64,7 +64,7 @@ func (e *Entity) gainExp(exp int) {
 	}
 }
 
-func (e *Entity) levelUp() {
+func (e *Entity) LevelUp() {
 	e.Lvl++
 
 	e.Exp = e.Exp - e.MaxExp
@@ -78,7 +78,7 @@ func (e *Entity) levelUp() {
 		}
 	}
 
-	e.statRecalc()
+	e.StatRecalc()
 
 	e.Hp = e.MaxHp
 	e.Mp = e.MaxMp
@@ -93,14 +93,14 @@ func (e *Entity) levelUp() {
 
 }
 
-func (e *Entity) statRecalc() {
+func (e *Entity) StatRecalc() {
 	e.MaxHp = ((e.Stats["sta"] + 5) * 10) * e.Lvl
 	e.MaxMp = (e.Stats["int"] + 2) * 10 * e.Lvl
 
 	e.Attacks[0].Damage = e.Stats["str"] + 25
 }
 
-func (e *Entity) getItem() {
+func (e *Entity) GetItem() {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
@@ -135,25 +135,25 @@ func (e *Entity) getItem() {
 			e.Items[slot] = itemTemplates["nog"]
 		}
 		// Recalculate Stats with Item
-		e.equpItem(slot)
-		e.statRecalc()
+		e.EquipItem(slot)
+		e.StatRecalc()
 	} else {
 		e.Potions++
 	}
 }
 
-func (e *Entity) equpItem(slot int) {
+func (e *Entity) EquipItem(slot int) {
 	e.Stats[e.Items[slot].Smod] += e.Items[slot].Multi
-	e.statRecalc()
+	e.StatRecalc()
 }
 
-func (e *Entity) unequpItem(slot int) {
+func (e *Entity) UnEquipItem(slot int) {
 	e.Stats[e.Items[slot].Smod] -= e.Items[slot].Multi
 	e.Items[slot] = itemTemplates["none"]
-	e.statRecalc()
+	e.StatRecalc()
 }
 
-func (e *Entity) usePotion() {
+func (e *Entity) UsePotion() {
 	if e.Potions < 1 {
 		fmt.Println("\nNo Potions left... ")
 	} else {
@@ -181,7 +181,7 @@ func (e *Entity) usePotion() {
 	}
 }
 
-func (e Entity) showStats() {
+func (e Entity) ShowStats() {
 	fmt.Print(
 		" Name\t", e.Name, "\n",
 		" Class\t", e.Class.Name, "\n",
@@ -204,7 +204,7 @@ func (e Entity) showStats() {
 	fmt.Print("≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n\n")
 }
 
-func (e *Entity) battle(attack int, other *Entity) {
+func (e *Entity) Battle(attack int, other *Entity) {
 
 	// Set Random Seed
 	rand.Seed(time.Now().UnixNano())
@@ -257,3 +257,27 @@ func (e *Entity) battle(attack int, other *Entity) {
 		}
 	}
 }
+
+func (p Entity) Menu() {
+
+	for i := 0; i < 4; i++ {
+		if p.Attacks[i].Name == "" {
+			p.Attacks[i].Name = "Not unlocked"
+		}
+	}
+
+	fmt.Print(
+		"‗========== ACTION ==========‗\n",
+		" [Q] ", p.Attacks[0].Name, " (MP: ", p.Attacks[0].Cost, ") \n",
+		" [W] ", p.Attacks[1].Name, " (MP: ", p.Attacks[1].Cost, ") \n",
+		" [E] ", p.Attacks[2].Name, " (MP: ", p.Attacks[2].Cost, ") \n",
+		" [R] ", p.Attacks[3].Name, " (MP: ", p.Attacks[3].Cost, ") \n",
+		" [A] Drop Item 1 \n",
+		" [S] Drop Item 2 \n",
+		" [D] Restore HP&MP (#: ", p.Potions, ")\n",
+		" [F] Do nothing.      \n",
+		" [X] quit             \n",
+		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
+	)
+}
+

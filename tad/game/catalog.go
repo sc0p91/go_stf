@@ -1,4 +1,4 @@
-package main
+package game
 
 var entityTemplates = map[string]Entity{
 	"mage": Entity{

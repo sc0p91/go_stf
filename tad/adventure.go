@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/sc0p91/tad/game"
 	"os"
 	"os/exec"
 	"runtime"
@@ -37,8 +38,8 @@ func clear() {
 
 func gameLoop() {
 
-	player := NewPlayer()
-	enemy := NewEnemy(player.Lvl)
+	player := game.NewPlayer()
+	enemy := game.NewEnemy(player.Lvl)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -50,21 +51,21 @@ func gameLoop() {
 		action := scanner.Text()
 		switch action {
 		case "q", "Q":
-			player.battle(0, enemy)
+			player.Battle(0, enemy)
 		case "w", "W":
-			player.battle(1, enemy)
+			player.Battle(1, enemy)
 		case "e", "E":
-			player.battle(2, enemy)
+			player.Battle(2, enemy)
 		case "r", "R":
-			player.battle(3, enemy)
+			player.Battle(3, enemy)
 		case "a", "A":
 			fmt.Println("drop ", player.Items[0].Name, "\n ")
-			player.unequpItem(0)
+			player.UnEquipItem(0)
 		case "s", "S":
 			fmt.Println("drop ", player.Items[1].Name, "\n ")
-			player.unequpItem(1)
+			player.UnEquipItem(1)
 		case "d", "D":
-			player.usePotion()
+			player.UsePotion()
 		case "f", "F":
 			fmt.Println("\n...zzz ZZZ zzz...")
 		case "x", "X":
@@ -78,42 +79,19 @@ func gameLoop() {
 
 		if !enemy.Alive && player.Alive {
 			fmt.Printf("You killed %s, you gained %d Exp.\n", enemy.Name, enemy.Exp)
-			player.gainExp(enemy.Exp)
+			player.GainExp(enemy.Exp)
 
-			enemy = NewEnemy(player.Lvl)
+			enemy = game.NewEnemy(player.Lvl)
 		}
 		// Show E & P Stats + Actions
 		fmt.Println("\n‗========= OPPONENT =========‗")
-		enemy.showStats()
+		enemy.ShowStats()
 
 		fmt.Println("‗========== PLAYER ==========‗")
-		player.showStats()
+		player.ShowStats()
 
-		player.menu()
+		player.Menu()
 	}
-}
-
-func (p Entity) menu() {
-
-	for i := 0; i < 4; i++ {
-		if p.Attacks[i].Name == "" {
-			p.Attacks[i].Name = "Not unlocked"
-		}
-	}
-
-	fmt.Print(
-		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.Attacks[0].Name, " (MP: ", p.Attacks[0].Cost, ") \n",
-		" [W] ", p.Attacks[1].Name, " (MP: ", p.Attacks[1].Cost, ") \n",
-		" [E] ", p.Attacks[2].Name, " (MP: ", p.Attacks[2].Cost, ") \n",
-		" [R] ", p.Attacks[3].Name, " (MP: ", p.Attacks[3].Cost, ") \n",
-		" [A] Drop Item 1 \n",
-		" [S] Drop Item 2 \n",
-		" [D] Restore HP&MP (#: ", p.Potions, ")\n",
-		" [F] Do nothing.      \n",
-		" [X] quit             \n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
-	)
 }
 
 func main() {
