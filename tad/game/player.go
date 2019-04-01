@@ -1,4 +1,4 @@
-package main
+package game
 
 import (
 	"bufio"
@@ -27,7 +27,7 @@ func NewPlayer() *Entity {
 		"[P] Paladin - Rightful Fighter of the Light\n",
 		"[R] Ranger - Distant Fighter with Bow and Arrow\n")
 
-	for p.class.name == "" {
+	for p.Class.Name == "" {
 		class, _ := reader.ReadString('\n')
 		class = strings.Replace(class, "\n", "", -1)
 		switch class {
@@ -41,27 +41,27 @@ func NewPlayer() *Entity {
 			p = entityTemplates["ranger"]
 		default:
 			fmt.Print("\"", class, "\" not recognized.\n",
-				"Please choose a provided class\n")
+				"Please choose a provided Class\n")
 			break
 		}
 	}
 	p.Name = strings.Replace(pname, "\n", "", -1)
-	p.hp = 100 + p.stats["sta"]*10
-	p.mp = 100 + p.stats["int"]*10
-	p.maxHp = p.hp
-	p.maxMp = p.mp
-	p.maxExp = 100
-	p.lvl = 1
+	p.Hp = 100 + p.Stats["sta"]*10
+	p.Mp = 100 + p.Stats["int"]*10
+	p.MaxHp = p.Hp
+	p.MaxMp = p.Mp
+	p.MaxExp = 100
+	p.Lvl = 1
 	p.Player = true
 	p.Alive = true
-	p.items[0] = itemTemplates["none"]
-	p.items[1] = itemTemplates["none"]
-	p.potions = 3
+	p.Items[0] = itemTemplates["none"]
+	p.Items[1] = itemTemplates["none"]
+	p.Potions = 3
 
-	fmt.Print("A ", p.class.name, " it is!\n",
+	fmt.Print("A ", p.Class.Name, " it is!\n",
 		"[Hit enter to begin your journey]")
 
-	p.attacks[0] = attackTemplates["Unarmed Strike"]
+	p.Attacks[0] = attackTemplates["Unarmed Strike"]
 
 	return &p
 }

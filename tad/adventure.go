@@ -3,68 +3,41 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/sc0p91/tad/game"
+	"github.com/sc0p91/tad/util"
 	"os"
-	"os/exec"
-	"runtime"
 )
-
-var clr map[string]func()
-
-func init() {
-	clr = make(map[string]func())
-	clr["linux"] = func() {
-		// Linux Clear
-		cmd := exec.Command("clear")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	}
-	clr["windows"] = func() {
-		// Windows Clear
-		cmd := exec.Command("cmd", "/c", "cls")
-		cmd.Stdout = os.Stdout
-		cmd.Run()
-	}
-}
-
-func clear() {
-	value, ok := clr[runtime.GOOS]
-	if ok {
-		value()
-	} else {
-		panic("Your platform is unsupported! I can't clear terminal screen :(")
-	}
-}
 
 func gameLoop() {
 
-	player := NewPlayer()
-	enemy := newEnemy(player.lvl)
+	player := game.NewPlayer()
+	enemy := game.NewEnemy(player.Lvl)
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() && player.Alive {
 
 		// Clear the screen for every iteration
-		clear()
+		util.Clear()
 
 		action := scanner.Text()
 		switch action {
 		case "q", "Q":
-			player.battle(0, enemy)
+			player.Battle(0, enemy)
 		case "w", "W":
-			player.battle(1, enemy)
+			player.Battle(1, enemy)
 		case "e", "E":
-			player.battle(2, enemy)
+			player.Battle(2, enemy)
 		case "r", "R":
-			player.battle(3, enemy)
+			player.Battle(3, enemy)
 		case "a", "A":
-			fmt.Println("drop ", player.items[0].name, "\n ")
-			player.unequpItem(0)
+			fmt.Println("drop ", player.Items[0].Name, "\n ")
+			player.UnEquipItem(0)
 		case "s", "S":
-			fmt.Println("drop ", player.items[1].name, "\n ")
-			player.unequpItem(1)
+			fmt.Println("drop ", player.Items[1].Name, "\n ")
+			player.UnEquipItem(1)
 		case "d", "D":
-			player.usePotion()
+			player.UsePotion()
 		case "f", "F":
 			fmt.Println("\n...zzz ZZZ zzz...")
 		case "x", "X":
@@ -77,43 +50,20 @@ func gameLoop() {
 		}
 
 		if !enemy.Alive && player.Alive {
-			fmt.Printf("You killed %s, you gained %d exp.\n", enemy.Name, enemy.exp)
-			player.gainExp(enemy.exp)
+			fmt.Printf("You killed %s, you gained %d Exp.\n", enemy.Name, enemy.Exp)
+			player.GainExp(enemy.Exp)
 
-			enemy = newEnemy(player.lvl)
+			enemy = game.NewEnemy(player.Lvl)
 		}
 		// Show E & P Stats + Actions
 		fmt.Println("\n‗========= OPPONENT =========‗")
-		enemy.showStats()
+		enemy.ShowStats()
 
 		fmt.Println("‗========== PLAYER ==========‗")
-		player.showStats()
+		player.ShowStats()
 
-		player.menu()
+		util.Menu(*player)
 	}
-}
-
-func (p Entity) menu() {
-
-	for i := 0; i < 4; i++ {
-		if p.attacks[i].name == "" {
-			p.attacks[i].name = "Not unlocked"
-		}
-	}
-
-	fmt.Print(
-		"‗========== ACTION ==========‗\n",
-		" [Q] ", p.attacks[0].name, " (MP: ", p.attacks[0].cost, ") \n",
-		" [W] ", p.attacks[1].name, " (MP: ", p.attacks[1].cost, ") \n",
-		" [E] ", p.attacks[2].name, " (MP: ", p.attacks[2].cost, ") \n",
-		" [R] ", p.attacks[3].name, " (MP: ", p.attacks[3].cost, ") \n",
-		" [A] Drop Item 1 \n",
-		" [S] Drop Item 2 \n",
-		" [D] Restore HP&MP (#: ", p.potions, ")\n",
-		" [F] Do nothing.      \n",
-		" [X] quit             \n",
-		"≡‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗‗≡\n",
-	)
 }
 
 func main() {
