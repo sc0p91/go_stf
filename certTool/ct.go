@@ -69,17 +69,17 @@ func ConvPem(certiPrt string) {
 	fmt.Printf("inside x509 func\n")
 }
 
-//ConvP7 - Does the conversion with x509 certs
+//ConvP7 - Does the conversion with pkcs7 certs
 func ConvP7(certiPrt string) {
 	fmt.Printf("inside pkcs7 func\n")
 }
 
-//ConvP12 - Does the conversion with x509 certs
+//ConvP12 - Does the conversion with pkcs12 certs
 func ConvP12(certiPrt string) {
 	fmt.Printf("inside pkcs12 func\n")
 }
 
-//ConvDer - Does the conversion with x509 certs
+//ConvDer - Does the conversion with der certs
 func ConvDer(certiPrt string) {
 	fmt.Printf("inside der func\n")
 }
