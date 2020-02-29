@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"fyne.io/fyne"
-	"fyne.io/fyne/widget"
 	"fyne.io/fyne/app"
+	"fyne.io/fyne/widget"
 )
 
 func formApp(app fyne.App) {

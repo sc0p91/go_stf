@@ -1,0 +1,5 @@
+99108b7f2f31f34efb05adbffe89a543a856b0b9		branch 'fix/recursive-succ-error' of https://github.com/gostaticanalysis/analysisutil
+30e31e2f8315e53e78c09bd12e53bb8d3e98c547		branch 'master' of https://github.com/gostaticanalysis/analysisutil
+4ced81631be78be2492b571da08bde0b8d03e470		tag 'v0.0.1' of https://github.com/gostaticanalysis/analysisutil
+49731a1ef67b1af6fed2336cd72f85286addfb77		tag 'v0.0.2' of https://github.com/gostaticanalysis/analysisutil
+e9ecfa28cf23ff7e55a7e64f1b2620d5350abd17		tag 'v0.0.3' of https://github.com/gostaticanalysis/analysisutil
