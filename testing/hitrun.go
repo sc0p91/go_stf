@@ -15,6 +15,8 @@ func NewCharacter(x, y, w, h int, color tl.Attr, move bool, npc bool, enemy bool
 	return &Character{
 		Rectangle: tl.NewRectangle(x, y, w, h, color),
 		move:      move,
+		npc:       npc,
+		enemy:     enemy,
 	}
 }
 
@@ -38,6 +40,9 @@ func (c *Character) Tick(ev tl.Event) {
 
 func (c *Character) Collide(p tl.Physical) {
 	if _, ok := p.(*Character); ok && c.move {
+		c.SetPosition(c.px, c.py)
+	}
+	if _, ok := p.(*Character); ok && c.enemy {
 		c.SetColor(tl.ColorRed)
 		c.SetPosition(c.px, c.py)
 	}
