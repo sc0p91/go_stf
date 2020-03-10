@@ -4,19 +4,31 @@ import tl "github.com/JoelOtter/termloop"
 
 type Character struct {
 	*tl.Rectangle
+	move bool
+	px   int
+	py   int
+}
+
+type NPC struct {
+	*tl.Rectangle
 	move  bool
-	npc   bool
 	enemy bool
 	px    int
 	py    int
 }
 
-func NewCharacter(x, y, w, h int, color tl.Attr, move bool, npc bool, enemy bool) *Character {
+func NewNPC(x, y, w, h int, color tl.Attr, move bool, enemy bool) *NPC {
+	return &NPC{
+		Rectangle: tl.NewRectangle(x, y, w, h, color),
+		move:      move,
+		enemy:     enemy,
+	}
+}
+
+func NewCharacter(x, y, w, h int, color tl.Attr, move bool) *Character {
 	return &Character{
 		Rectangle: tl.NewRectangle(x, y, w, h, color),
 		move:      move,
-		npc:       npc,
-		enemy:     enemy,
 	}
 }
 
@@ -39,11 +51,8 @@ func (c *Character) Tick(ev tl.Event) {
 }
 
 func (c *Character) Collide(p tl.Physical) {
-	if _, ok := p.(*Character); ok && c.move {
-		c.SetPosition(c.px, c.py)
-	}
-	if _, ok := p.(*Character); ok && c.enemy {
-		c.SetColor(tl.ColorRed)
+	//if _, ok := p.(*NPC); ok && c.move {
+	if _, ok := p.(*NPC); ok {
 		c.SetPosition(c.px, c.py)
 	}
 }
@@ -53,14 +62,18 @@ func main() {
 	game.Screen().SetFps(60)
 
 	lvl := tl.NewBaseLevel(tl.Cell{Bg: tl.ColorWhite})
-	lvl.AddEntity(NewCharacter(2, 2, 1, 1, tl.ColorYellow, true, false, false))
-	lvl.AddEntity(NewCharacter(10, 9, 1, 1, tl.ColorRed, false, true, true))
-	lvl.AddEntity(NewCharacter(8, 4, 1, 1, tl.ColorGreen, false, true, false))
-	lvl.AddEntity(NewCharacter(8, 6, 3, 2, tl.ColorBlack, false, false, false))
-	lvl.AddEntity(NewCharacter(12, 7, 3, 2, tl.ColorBlack, false, false, false))
-	lvl.AddEntity(NewCharacter(14, 9, 3, 2, tl.ColorBlack, false, false, false))
+	lvl.AddEntity(NewCharacter(2, 2, 1, 1, tl.ColorYellow, true))
+	lvl.AddEntity(NewNPC(10, 9, 1, 1, tl.ColorRed, false, true))
+	lvl.AddEntity(NewNPC(8, 4, 1, 1, tl.ColorGreen, false, true))
+	lvl.AddEntity(NewNPC(8, 6, 3, 2, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(12, 7, 3, 2, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(14, 9, 3, 2, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(0, 0, 1, 20, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(0, 0, 60, 1, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(0, 20, 60, 1, tl.ColorBlack, false, false))
+	lvl.AddEntity(NewNPC(60, 0, 1, 21, tl.ColorBlack, false, false))
 
 	game.Screen().SetLevel(lvl)
-	game.Screen().AddEntity(tl.NewFpsText(1, 1, tl.ColorRed, tl.ColorDefault, 0.5))
+	game.Screen().AddEntity(tl.NewFpsText(0, 22, tl.ColorRed, tl.ColorDefault, 0.5))
 	game.Start()
 }
