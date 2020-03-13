@@ -71,7 +71,7 @@ func (c *Character) Collide(p tl.Physical) {
 func (n *NPC) Collide(p tl.Physical) {
 	//if _, ok := p.(*NPC); ok && c.move {
 	if _, ok := p.(*Character); ok && n.enemy {
-		print("FIGHT")
+		n.SetColor(tl.ColorDefault)
 	}
 }
 
