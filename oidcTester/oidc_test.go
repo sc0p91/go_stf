@@ -43,10 +43,12 @@ func TestConnection(t *testing.T) {
 
 func TestBasicAuth(t *testing.T) {
 
-	searchPattern := "Your last login attempt failed. Please check your input."
+	searchPattern := "failed"
 	formData := url.Values{
-		"isiwebuserid": {"testuser"},
-		"isiwebpasswd": {"testpass"},
+		"isiwebuserid": {"blibli"},
+		"isiwebpasswd": {"blublu"},
+		"transferID":   {"ac11911a-1c864-12ac3671-17401c80c3c-001a8164"},
+		"application":  {"6b1b55c69af175703f68ab6727514474"},
 	}
 
 	res, err := http.PostForm("https://idpe.post.ch/auth/saml", formData)
@@ -71,7 +73,11 @@ func TestBasicAuth(t *testing.T) {
 
 		// Check if the Login failed
 		bodyString := string(bodyBytes)
-		if strings.ContainsAny(searchPattern, bodyString) {
+		t.Log(bodyString)
+		result1 := strings.Contains(bodyString, searchPattern)
+		result2 := strings.Index(bodyString, searchPattern)
+		t.Log(result1, result2)
+		if strings.Contains(bodyString, searchPattern) {
 			t.Error("Failed to Authenticate")
 		}
 	}
