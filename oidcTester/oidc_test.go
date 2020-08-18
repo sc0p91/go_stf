@@ -8,23 +8,28 @@ import (
 )
 
 func TestConnection(t *testing.T) {
+	// Create the Request (URL, Method and Headers)
+	url := "https://idpe.post.ch/auth/sam"
+	req, _ := http.NewRequest("GET", url, nil)
+	req.Header.Add("cache-control", "no-cache")
+
 	// Get the login page and close the connection afterwards
-	resp, err := http.Get("https://idpe.post.ch/auth/saml")
+	res, err := http.DefaultClient.Do(req)
 	if err != nil {
 		t.Error("Failed to connect")
 		os.Exit(1)
 	}
-	defer resp.Body.Close()
+	defer res.Body.Close()
 
 	// Check if the Response Status is OK
-	if resp.StatusCode == http.StatusOK {
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if res.StatusCode == http.StatusOK {
+		bodyBytes, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			t.Error(err)
 		}
 
-		t.Log("Answer from ", resp.TLS.ServerName)
-		t.Log("Status: ", resp.Status)
+		t.Log("Answer from ", res.TLS.ServerName)
+		t.Log("Status: ", res.Status)
 
 		_ = bodyBytes
 		// --> Outputs the whole body
