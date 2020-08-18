@@ -1,0 +1,34 @@
+package main
+
+import (
+	"io/ioutil"
+	"net/http"
+	"os"
+	"testing"
+)
+
+func TestConnection(t *testing.T) {
+	// Get the login page and close the connection afterwards
+	resp, err := http.Get("https://idpe.post.ch/auth/saml")
+	if err != nil {
+		t.Error("Failed to connect")
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+
+	// Check if the Response Status is OK
+	if resp.StatusCode == http.StatusOK {
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			t.Error(err)
+		}
+
+		t.Log("Answer from ", resp.TLS.ServerName)
+		t.Log("Status: ", resp.Status)
+
+		_ = bodyBytes
+		// --> Outputs the whole body
+		//bodyString := string(bodyBytes)
+		//t.Log(bodyString)
+	}
+}
