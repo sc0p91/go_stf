@@ -41,44 +41,45 @@ func TestConnection(t *testing.T) {
 	}
 }
 
-func TestBasicAuth(t *testing.T) {
+// -> This would be the test for a successful login...
+// func TestBasicAuth(t *testing.T) {
 
-	searchPattern := "failed"
-	formData := url.Values{
-		"isiwebuserid": {"blibli"},
-		"isiwebpasswd": {"blublu"},
-		"transferID":   {"ac11911a-1c864-12ac3671-17401c80c3c-001a8164"},
-		"application":  {"6b1b55c69af175703f68ab6727514474"},
-	}
+// 	searchPattern := "failed"
+// 	formData := url.Values{
+// 		"isiwebuserid": {"blibli"},
+// 		"isiwebpasswd": {"blublu"},
+// 		"transferID":   {"ac11911a-1c864-12ac3671-17401c80c3c-001a8164"},
+// 		"application":  {"6b1b55c69af175703f68ab6727514474"},
+// 	}
 
-	res, err := http.PostForm("https://idpe.post.ch/auth/saml", formData)
-	if err != nil {
-		t.Error("Failed to connect")
-	}
+// 	res, err := http.PostForm("https://idpe.post.ch/auth/saml", formData)
+// 	if err != nil {
+// 		t.Error("Failed to connect")
+// 	}
 
-	var result map[string]interface{}
-	json.NewDecoder(res.Body).Decode(&result)
+// 	var result map[string]interface{}
+// 	json.NewDecoder(res.Body).Decode(&result)
 
-	defer res.Body.Close()
+// 	defer res.Body.Close()
 
-	// Check if the Response Status is OK
-	if res.StatusCode == http.StatusOK {
-		bodyBytes, err := ioutil.ReadAll(res.Body)
-		if err != nil {
-			t.Error(err)
-		}
+// 	// Check if the Response Status is OK
+// 	if res.StatusCode == http.StatusOK {
+// 		bodyBytes, err := ioutil.ReadAll(res.Body)
+// 		if err != nil {
+// 			t.Error(err)
+// 		}
 
-		t.Log("Answer from ", res.TLS.ServerName)
-		t.Log("Status: ", res.Status)
+// 		t.Log("Answer from ", res.TLS.ServerName)
+// 		t.Log("Status: ", res.Status)
 
-		// Check if the Login failed
-		bodyString := string(bodyBytes)
-		t.Log(bodyString)
-		result1 := strings.Contains(bodyString, searchPattern)
-		result2 := strings.Index(bodyString, searchPattern)
-		t.Log(result1, result2)
-		if strings.Contains(bodyString, searchPattern) {
-			t.Error("Failed to Authenticate")
-		}
-	}
-}
+// 		// Check if the Login failed
+// 		bodyString := string(bodyBytes)
+// 		t.Log(bodyString)
+// 		result1 := strings.Contains(bodyString, searchPattern)
+// 		result2 := strings.Index(bodyString, searchPattern)
+// 		t.Log(result1, result2)
+// 		if strings.Contains(bodyString, searchPattern) {
+// 			t.Error("Failed to Authenticate")
+// 		}
+// 	}
+// }
