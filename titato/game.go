@@ -21,7 +21,15 @@ func formater(board [3][3]int) {
 	fmt.Print("\n")
 	for i := 0; i <= 2; i++ {
 		for j := 0; j <= 2; j++ {
-			fmt.Print(board[i][j], " ")
+			//fmt.Print(board[i][j], " ")
+			switch board[i][j] {
+			case 1:
+				fmt.Print("[x]")
+			case 2:
+				fmt.Print("[o]")
+			case 9:
+				fmt.Print("[ ]")
+			}
 		}
 		fmt.Print("\n")
 	}
